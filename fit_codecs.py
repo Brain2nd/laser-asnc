@@ -21,6 +21,36 @@ from asnc_modules import (
 )
 
 
+def fp32_eager_attention_forward(module, query, key, value, attention_mask,
+                                  scaling, dropout=0.0, head_mask=None, **kwargs):
+    """FP32-intermediate eager attention. Prevents fp16 overflow in QK^T for
+    deep models (needed at Pythia-6.9b+ — transformers' default eager path
+    leaves QK^T in fp16 and overflows mid-stack, producing NaN activations)."""
+    orig_dtype = query.dtype
+    q, k, v = query.float(), key.float(), value.float()
+    attn = torch.matmul(q, k.transpose(2, 3)) * scaling
+    if attention_mask is not None:
+        causal = attention_mask[:, :, :, : k.shape[-2]].float()
+        attn = attn + causal
+    attn = F.softmax(attn, dim=-1)  # F.softmax is what our spy wraps
+    if head_mask is not None:
+        attn = attn * head_mask.float()
+    attn = F.dropout(attn, p=dropout, training=module.training)
+    out = torch.matmul(attn, v)
+    out = out.transpose(1, 2).contiguous().to(orig_dtype)
+    return out, attn.to(orig_dtype)
+
+
+def patch_gpt_neox_fp32_eager():
+    from transformers.models.gpt_neox import modeling_gpt_neox as m
+    m.eager_attention_forward = fp32_eager_attention_forward
+    try:
+        from transformers.modeling_utils import ALL_ATTENTION_FUNCTIONS
+        ALL_ATTENTION_FUNCTIONS["eager"] = fp32_eager_attention_forward
+    except Exception:
+        pass
+
+
 def _flat_rows(t):
     return t.reshape(-1, t.shape[-1]).detach().float().cpu()
 
@@ -158,6 +188,7 @@ def main():
 
     print(f"Loading {args.model}", flush=True)
     tok = AutoTokenizer.from_pretrained(args.model)
+    patch_gpt_neox_fp32_eager()     # must happen before model instantiation
     model = AutoModelForCausalLM.from_pretrained(
         args.model, torch_dtype=torch.float16,
         attn_implementation="eager",  # force eager so F.softmax spy works
