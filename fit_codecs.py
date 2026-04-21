@@ -104,11 +104,10 @@ def fit_all_layers(model, tokens, K_act, K_ln, K_sm, n_calib_rows):
         ln1 = torch.cat(ln1_buf) if ln1_buf else torch.empty(0, 0)
         ln2 = torch.cat(ln2_buf) if ln2_buf else torch.empty(0, 0)
         sm = torch.cat(sm_buf) if sm_buf else None
-        if i == 0:
-            print(f"  debug layer0: tokens.shape={tuple(tokens.shape)} "
-                  f"pg={tuple(pg.shape)} ln1={tuple(ln1.shape)} "
-                  f"ln2={tuple(ln2.shape)} sm={None if sm is None else tuple(sm.shape)}",
-                  flush=True)
+        print(f"  layer {i:3d}: pg_chunks={len(pg_buf)} ln1_chunks={len(ln1_buf)} "
+              f"pg={tuple(pg.shape)} ln1={tuple(ln1.shape)} "
+              f"sm={None if sm is None else sm.shape[0]}",
+              flush=True)
 
         # ------ fit codecs for layer i ------
         def _fit_act(samples):
