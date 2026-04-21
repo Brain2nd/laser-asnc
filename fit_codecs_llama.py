@@ -2,9 +2,10 @@
 eval_ppl_llama. Same architecture as Pythia's fit_codecs.py.
 
 Supports multi-GPU via device_map="auto" (for 70B)."""
-import argparse, time, torch, torch.nn.functional as F
+import argparse, time, sys, torch, torch.nn.functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from datasets import load_dataset
+from tqdm.auto import tqdm
 from asnc_modules import (
     make_asnc_silu, ASNCLayerNorm, ASNCSoftmax,
     bse_quantize_linears, int16_per_token_quant,
@@ -63,7 +64,7 @@ def fit_all_layers(model, tokens, first_device, K_act, K_ln, K_sm, n_calib_rows,
     }
 
     total_t0 = time.time()
-    for i in range(L):
+    for i in tqdm(range(L), desc="layers", dynamic_ncols=True, file=sys.stdout):
         t0 = time.time()
         ps_buf, ln1_buf, ln2_buf, sm_buf = [], [], [], []
         ps_need = [n_calib_rows]; ln1_need = [n_calib_rows]; ln2_need = [n_calib_rows]
@@ -110,7 +111,8 @@ def fit_all_layers(model, tokens, first_device, K_act, K_ln, K_sm, n_calib_rows,
         ]
 
         B, T = tokens.shape
-        for b in range(B):
+        for b in tqdm(range(B), desc=f"L{i:02d} fwd", leave=False,
+                       dynamic_ncols=True, file=sys.stdout):
             _ = model(tokens[b:b+1].to(first_device), use_cache=False)
 
         F.softmax = orig_softmax

@@ -13,9 +13,10 @@ No layer accumulates across others — 6.9b/12b fit in CPU RAM trivially.
 Run once per model:  python fit_codecs.py --model EleutherAI/pythia-6.9b --out codecs_pythia-6.9b.pt
 Pipeline then loads codecs from disk and only measures PPL.
 """
-import argparse, os, time, torch, torch.nn.functional as F
+import argparse, os, time, sys, torch, torch.nn.functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from datasets import load_dataset
+from tqdm.auto import tqdm
 from asnc_modules import (
     make_asnc_gelu, ASNCLayerNorm, ASNCSoftmax,
     bse_quantize_linears, int16_per_token_quant,
@@ -82,7 +83,8 @@ def fit_all_layers(model, tokens, K_act, K_ln, K_sm, n_calib_rows,
     }
 
     total_t0 = time.time()
-    for i in range(L):
+    layer_iter = tqdm(range(L), desc="layers", dynamic_ncols=True, file=sys.stdout)
+    for i in layer_iter:
         t0 = time.time()
         # ------ capture ONE layer only ------
         pg_buf, ln1_buf, ln2_buf, sm_buf = [], [], [], []
@@ -134,7 +136,9 @@ def fit_all_layers(model, tokens, K_act, K_ln, K_sm, n_calib_rows,
         # forward through ALL calib batches (no early exit) so every layer
         # gets the full budget even if a hook under-captures.
         B, T = tokens.shape
-        for b in range(B):
+        batch_iter = tqdm(range(B), desc=f"L{i:02d} fwd", leave=False,
+                           dynamic_ncols=True, file=sys.stdout)
+        for b in batch_iter:
             _ = model(tokens[b:b+1].to(device), use_cache=False)
 
         F.softmax = orig_softmax
