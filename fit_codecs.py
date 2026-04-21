@@ -204,13 +204,6 @@ def main():
         attn_implementation="eager",  # force eager so F.softmax spy works
     ).to("cuda").eval()
 
-    # Apply BSE weight quantisation BEFORE calibration so captured activations
-    # reflect the distribution the real inference pipeline will see (weights
-    # stay fp16 after dequant, so downstream matmuls are still fp16, matching
-    # the eval path bit-for-bit).
-    print("[BSE] per-channel INT16 weight quantisation", flush=True)
-    bse_quantize_linears(model)
-
     print("Loading wikitext-2 train tokens", flush=True)
     ds = load_dataset("wikitext", "wikitext-2-raw-v1", split="train")
     text = "\n\n".join(ds["text"])
