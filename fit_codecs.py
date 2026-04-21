@@ -18,16 +18,26 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from datasets import load_dataset
 from asnc_modules import (
     make_asnc_gelu, ASNCLayerNorm, ASNCSoftmax,
+    bse_quantize_linears, int16_per_token_quant,
 )
 
 
-def fp32_eager_attention_forward(module, query, key, value, attention_mask,
-                                  scaling, dropout=0.0, head_mask=None, **kwargs):
-    """FP32-intermediate eager attention. Prevents fp16 overflow in QK^T for
-    deep models (needed at Pythia-6.9b+ — transformers' default eager path
-    leaves QK^T in fp16 and overflows mid-stack, producing NaN activations)."""
+def calib_eager_attention_forward(module, query, key, value, attention_mask,
+                                   scaling, dropout=0.0, head_mask=None, **kwargs):
+    """Calibration-time eager attention: matches the EVAL pipeline's
+    `laser_eager_attention_forward` exactly — fp32 intermediates + DCR
+    (per-token INT16 Q/K/V). This ensures the post-softmax / LN-input /
+    pre-GeLU activations seen during calibration are from the SAME
+    distribution that the quantised inference path sees. No distribution
+    drift between fit and eval."""
     orig_dtype = query.dtype
-    q, k, v = query.float(), key.float(), value.float()
+    dcr_on = getattr(module, "_dcr_on_calib", True)
+    if dcr_on:
+        q = int16_per_token_quant(query).float()
+        k = int16_per_token_quant(key).float()
+        v = int16_per_token_quant(value).float()
+    else:
+        q, k, v = query.float(), key.float(), value.float()
     attn = torch.matmul(q, k.transpose(2, 3)) * scaling
     if attention_mask is not None:
         causal = attention_mask[:, :, :, : k.shape[-2]].float()
@@ -41,12 +51,12 @@ def fp32_eager_attention_forward(module, query, key, value, attention_mask,
     return out, attn.to(orig_dtype)
 
 
-def patch_gpt_neox_fp32_eager():
+def patch_gpt_neox_calib_eager():
     from transformers.models.gpt_neox import modeling_gpt_neox as m
-    m.eager_attention_forward = fp32_eager_attention_forward
+    m.eager_attention_forward = calib_eager_attention_forward
     try:
         from transformers.modeling_utils import ALL_ATTENTION_FUNCTIONS
-        ALL_ATTENTION_FUNCTIONS["eager"] = fp32_eager_attention_forward
+        ALL_ATTENTION_FUNCTIONS["eager"] = calib_eager_attention_forward
     except Exception:
         pass
 
@@ -188,11 +198,18 @@ def main():
 
     print(f"Loading {args.model}", flush=True)
     tok = AutoTokenizer.from_pretrained(args.model)
-    patch_gpt_neox_fp32_eager()     # must happen before model instantiation
+    patch_gpt_neox_calib_eager()    # must happen before model instantiation
     model = AutoModelForCausalLM.from_pretrained(
         args.model, torch_dtype=torch.float16,
         attn_implementation="eager",  # force eager so F.softmax spy works
     ).to("cuda").eval()
+
+    # Apply BSE weight quantisation BEFORE calibration so captured activations
+    # reflect the distribution the real inference pipeline will see (weights
+    # stay fp16 after dequant, so downstream matmuls are still fp16, matching
+    # the eval path bit-for-bit).
+    print("[BSE] per-channel INT16 weight quantisation", flush=True)
+    bse_quantize_linears(model)
 
     print("Loading wikitext-2 train tokens", flush=True)
     ds = load_dataset("wikitext", "wikitext-2-raw-v1", split="train")
