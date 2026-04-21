@@ -24,14 +24,13 @@ from asnc_modules import (
 
 def calib_eager_attention_forward(module, query, key, value, attention_mask,
                                    scaling, dropout=0.0, head_mask=None, **kwargs):
-    """Calibration-time eager attention: matches the EVAL pipeline's
-    `laser_eager_attention_forward` exactly — fp32 intermediates + DCR
-    (per-token INT16 Q/K/V). This ensures the post-softmax / LN-input /
-    pre-GeLU activations seen during calibration are from the SAME
-    distribution that the quantised inference path sees. No distribution
-    drift between fit and eval."""
+    """Calibration-time eager attention: fp32 intermediate (prevents fp16 QK^T
+    overflow on 6.9B+).  DCR is OFF by default — the old in-place pipeline
+    captured calibration activations on the unquantised attention path, and
+    empirically matching that yields better PPL than fitting on DCR-perturbed
+    activations.  Set module._dcr_on_calib=True to enable DCR during calib."""
     orig_dtype = query.dtype
-    dcr_on = getattr(module, "_dcr_on_calib", True)
+    dcr_on = getattr(module, "_dcr_on_calib", False)
     if dcr_on:
         q = int16_per_token_quant(query).float()
         k = int16_per_token_quant(key).float()
