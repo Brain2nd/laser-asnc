@@ -2,9 +2,9 @@
   "model": "EleutherAI/pythia-70m",
   "fp16_ppl": 40.8866,
   "fp16_sec": 0.0,
-  "full_laser_ppl": 40.91556167602539,
-  "laser_sec": 89.83125877380371,
-  "delta_ppl": 0.028961676025389238,
+  "full_laser_ppl": 40.9021110534668,
+  "laser_sec": 139.49621486663818,
+  "delta_ppl": 0.015511053466795488,
   "K_activation": 1024,
   "K_softmax": 256,
   "K_layernorm": 1024

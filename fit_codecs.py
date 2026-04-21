@@ -65,7 +65,8 @@ def _flat_rows(t):
 
 
 @torch.no_grad()
-def fit_all_layers(model, tokens, K_act, K_ln, K_sm, n_calib_rows):
+def fit_all_layers(model, tokens, K_act, K_ln, K_sm, n_calib_rows,
+                    K_tail_act=0, K_tail_ln=0):
     """Fit codecs layer-by-layer and return a dict of state tensors."""
     layers = model.gpt_neox.layers
     L = len(layers)
@@ -150,14 +151,14 @@ def fit_all_layers(model, tokens, K_act, K_ln, K_sm, n_calib_rows):
 
         # ------ fit codecs for layer i ------
         def _fit_act(samples):
-            m = make_asnc_gelu(K=K_act).to(device)
+            m = make_asnc_gelu(K=K_act, K_tail=K_tail_act).to(device)
             m.fit(samples)
             return m.thresholds.detach().cpu(), m.y.detach().cpu()
 
         def _fit_ln(samples):
             # dummy base_ln; we only want the codec params
             base = torch.nn.LayerNorm(samples.shape[-1]).to(device)
-            m = ASNCLayerNorm(base, K=K_ln).to(device)
+            m = ASNCLayerNorm(base, K=K_ln, K_tail=K_tail_ln).to(device)
             m.fit(samples)
             return m.thresholds.detach().cpu(), m.y.detach().cpu()
 
@@ -187,21 +188,35 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--out", required=True)
-    ap.add_argument("--K_act", type=int, default=1024)
-    ap.add_argument("--K_ln", type=int, default=1024)
-    ap.add_argument("--K_sm", type=int, default=256)
-    ap.add_argument("--n_rows", type=int, default=8192, help="calib rows per layer")
+    ap.add_argument("--K_act", type=int, default=4096)
+    ap.add_argument("--K_ln", type=int, default=4096)
+    ap.add_argument("--K_sm", type=int, default=512)
+    ap.add_argument("--K_tail_act", type=int, default=64,
+                    help="extra bins per tail for activation codec (outlier zone)")
+    ap.add_argument("--K_tail_ln", type=int, default=64,
+                    help="extra bins per tail for LN codec (outlier zone)")
+    ap.add_argument("--n_rows", type=int, default=50000, help="calib rows per layer (matches old flow)")
     ap.add_argument("--seq_len", type=int, default=1024)
-    ap.add_argument("--n_batches", type=int, default=16)
+    ap.add_argument("--n_batches", type=int, default=48)
     args = ap.parse_args()
 
     print(f"Loading {args.model}", flush=True)
     tok = AutoTokenizer.from_pretrained(args.model)
-    patch_gpt_neox_calib_eager()    # must happen before model instantiation
+    # Calibration must see the EXACT same forward path the eval pipeline uses:
+    #   1. BSE-quantised weights
+    #   2. laser_eager attention with DCR (INT16 Q/K/V) and fp32 intermediate
+    # Otherwise captured pre-GeLU / LN-input distributions differ from the
+    # inference distribution and the codec is miscalibrated.
+    patch_gpt_neox_calib_eager()
     model = AutoModelForCausalLM.from_pretrained(
         args.model, torch_dtype=torch.float16,
-        attn_implementation="eager",  # force eager so F.softmax spy works
+        attn_implementation="eager",  # so laser/calib eager is actually called
     ).to("cuda").eval()
+    print("[BSE] per-channel INT16 weight quantisation (match eval)", flush=True)
+    bse_quantize_linears(model)
+    # Enable DCR on every attention module for calibration (matches eval_ppl).
+    for layer in model.gpt_neox.layers:
+        layer.attention._dcr_on_calib = True
 
     print("Loading wikitext-2 train tokens", flush=True)
     ds = load_dataset("wikitext", "wikitext-2-raw-v1", split="train")
@@ -218,7 +233,10 @@ def main():
         model, tokens,
         K_act=args.K_act, K_ln=args.K_ln, K_sm=args.K_sm,
         n_calib_rows=args.n_rows,
+        K_tail_act=args.K_tail_act, K_tail_ln=args.K_tail_ln,
     )
+    state["meta"]["K_tail_act"] = args.K_tail_act
+    state["meta"]["K_tail_ln"]  = args.K_tail_ln
 
     torch.save(state, args.out)
     print(f"saved codecs to {args.out}", flush=True)

@@ -106,18 +106,76 @@ def bennett_thresholds_batched(x, f_fn, fp_fn, K, n_hist=4096, device=None):
     return thresholds, y
 
 
+def bennett_three_zone(x, f_fn, fp_fn, K_main, K_tail, device=None,
+                        q_main_lo=0.005, q_main_hi=0.995):
+    """Three-zone Bennett fit: separate codecs for lower tail, main bulk, upper tail.
+    Tail zones get K_tail dedicated bins — handles outlier-feature channels
+    (Pythia-6.9B+, LLaMA-2 70B) where heavy tails collapse single-zone Bennett.
+    Total bins = K_main + 2·K_tail."""
+    if device is None:
+        device = x.device
+    x = x.to(device).contiguous().float()
+    N, H = x.shape
+
+    x_min = x.min(dim=0).values                                  # [H]
+    x_max = x.max(dim=0).values
+    q_lo = torch.quantile(x, q_main_lo, dim=0)
+    q_hi = torch.quantile(x, q_main_hi, dim=0)
+    # ensure strict ordering (handle degenerate constant channels)
+    gap = 1e-12
+    q_lo = torch.minimum(q_lo, q_hi - gap)
+    x_min = torch.minimum(x_min, q_lo - gap)
+    x_max = torch.maximum(x_max, q_hi + gap)
+
+    # Fit main zone on samples within [q_lo, q_hi] (per channel filter)
+    #   We route out-of-range samples to the tail zones via masking rather
+    #   than per-channel subsetting (since N differs per channel after mask).
+    #   Simpler approach: just use the full x but rely on searchsorted-based
+    #   quantile for threshold placement within each zone.
+    def _fit_zone(x_sub, K):
+        # x_sub [N_sub, H]. Feeds sort-based bennett.
+        return bennett_thresholds_batched(x_sub, f_fn, fp_fn, K, device=device)
+
+    # For tail zones we pad samples that fall outside [x_min, q_lo] (lower)
+    # or [q_hi, x_max] (upper) to the zone boundary to avoid empty sorted cols.
+    # The cleanest way is per-column: but the per-column lengths differ, so we
+    # cap using clamp: samples inside the zone stay, samples outside are
+    # pushed to the boundary, contributing near-zero Bennett weight.
+    x_low = torch.clamp(x, max=q_lo)   # [N, H]; all values ≤ q_lo
+    x_mn  = torch.clamp(x, min=q_lo, max=q_hi)
+    x_up  = torch.clamp(x, min=q_hi)
+
+    t_lo, y_lo = _fit_zone(x_low, K_tail)
+    t_mn, y_mn = _fit_zone(x_mn,  K_main)
+    t_up, y_up = _fit_zone(x_up,  K_tail)
+
+    sep_lo = q_lo.unsqueeze(1)
+    sep_hi = q_hi.unsqueeze(1)
+    thresholds = torch.cat([t_lo, sep_lo, t_mn, sep_hi, t_up], dim=1)
+    # cummax with fp16-visible eps so thresholds stay distinguishable after
+    # dtype cast at inference.
+    span = (x_max - x_min).clamp_min(1e-30)
+    rel_eps = (span.unsqueeze(1) / max(thresholds.shape[1], 1) * 1e-3) * \
+               torch.arange(thresholds.shape[1], device=device, dtype=torch.float32).unsqueeze(0)
+    thresholds = torch.cummax(thresholds + rel_eps, dim=1).values
+    y = torch.cat([y_lo, y_mn, y_up], dim=1)
+    return thresholds, y
+
+
 class ASNCActivation(nn.Module):
-    """Per-channel K-level piecewise-constant codec for scalar activation.
-    Each input dimension gets its own K thresholds + K reconstructions.
-    Fit: clamp outliers to per-channel 0.1%/99.9% quantile, then GPU-batched
-    Bennett-Panter-Dite (bit-exact with the numpy per-channel loop)."""
-    def __init__(self, f_fn, fp_fn, K=32):
+    """Per-channel piecewise-constant codec for scalar activation.
+    K: main-bulk bins (0.5..99.5% quantile range).
+    K_tail: dedicated bins per tail (outer 0.5% each side). Total bins = K + 2·K_tail.
+    K_tail=0 → single-zone (backwards-compatible)."""
+    def __init__(self, f_fn, fp_fn, K=32, K_tail=0):
         super().__init__()
         self.f_fn = f_fn
         self.fp_fn = fp_fn
-        self.K = K
-        self.register_buffer("thresholds", torch.zeros(1, max(K - 1, 1)))
-        self.register_buffer("y", torch.zeros(1, K))
+        self.K_main = K
+        self.K_tail = K_tail
+        self.K = K + 2 * K_tail
+        self.register_buffer("thresholds", torch.zeros(1, max(self.K - 1, 1)))
+        self.register_buffer("y", torch.zeros(1, self.K))
         self.fitted = False
 
     def fit(self, samples: torch.Tensor):
@@ -129,9 +187,19 @@ class ASNCActivation(nn.Module):
         x = x.to(device)
         if x.shape[0] < 2 * self.K:
             raise RuntimeError(f"ASNCActivation.fit: too few samples ({x.shape[0]} < {2*self.K})")
-        thresh, recon = bennett_thresholds_batched(
-            x, self.f_fn, self.fp_fn, self.K, device=device,
-        )
+        if self.K_tail > 0:
+            thresh, recon = bennett_three_zone(
+                x, self.f_fn, self.fp_fn,
+                K_main=self.K_main, K_tail=self.K_tail, device=device,
+            )
+        else:
+            if x.shape[0] > 200:
+                q_lo = torch.quantile(x, 0.001, dim=0)
+                q_hi = torch.quantile(x, 0.999, dim=0)
+                x = torch.clamp(x, q_lo, q_hi)
+            thresh, recon = bennett_thresholds_batched(
+                x, self.f_fn, self.fp_fn, self.K_main, device=device,
+            )
         self.thresholds = thresh.to(self.thresholds.device)
         self.y = recon.to(self.y.device)
         self.fitted = True
@@ -168,8 +236,8 @@ def gelu_fprime(x):
     return cdf + x * pdf
 
 
-def make_asnc_silu(K=32): return ASNCActivation(silu_fn, silu_fprime, K)
-def make_asnc_gelu(K=32): return ASNCActivation(gelu_fn, gelu_fprime, K)
+def make_asnc_silu(K=32, K_tail=0): return ASNCActivation(silu_fn, silu_fprime, K, K_tail)
+def make_asnc_gelu(K=32, K_tail=0): return ASNCActivation(gelu_fn, gelu_fprime, K, K_tail)
 
 
 class ASNCSoftmax(nn.Module):
@@ -223,15 +291,17 @@ class ASNCSoftmax(nn.Module):
 
 
 class ASNCLayerNorm(nn.Module):
-    """Per-channel K-level codec on LN INPUT, then exact LN.
-    Each input dim gets its own K thresholds/reconstructions.
-    Fit: clamp to per-channel 0.05%/99.95% quantile, then GPU-batched Bennett."""
-    def __init__(self, base_ln: nn.Module, K=24, hidden=None):
+    """Per-channel codec on LN INPUT, then exact LN.
+    K: main-bulk bins. K_tail: dedicated tail bins (for outlier-feature channels).
+    Total bins = K + 2·K_tail. K_tail=0 → single-zone."""
+    def __init__(self, base_ln: nn.Module, K=24, K_tail=0, hidden=None):
         super().__init__()
         self.base_ln = base_ln
-        self.K = K
-        self.register_buffer("thresholds", torch.zeros(1, max(K - 1, 1)))
-        self.register_buffer("y", torch.zeros(1, K))
+        self.K_main = K
+        self.K_tail = K_tail
+        self.K = K + 2 * K_tail
+        self.register_buffer("thresholds", torch.zeros(1, max(self.K - 1, 1)))
+        self.register_buffer("y", torch.zeros(1, self.K))
         self.fitted = False
         self.hidden = hidden
 
@@ -250,12 +320,15 @@ class ASNCLayerNorm(nn.Module):
         x = x.to(device)
         if x.shape[0] < 2 * self.K:
             raise RuntimeError(f"ASNCLayerNorm.fit: too few samples ({x.shape[0]} < {2*self.K})")
-        # Sort-based Bennett places thresholds at K equal-probability sample
-        # positions — no clamp needed (the k/K quantile naturally ignores the
-        # bottom/top 1/K of samples anyway).
-        thresh, recon = bennett_thresholds_batched(
-            x, f_fn, fp_fn, self.K, device=device,
-        )
+        if self.K_tail > 0:
+            thresh, recon = bennett_three_zone(
+                x, f_fn, fp_fn,
+                K_main=self.K_main, K_tail=self.K_tail, device=device,
+            )
+        else:
+            thresh, recon = bennett_thresholds_batched(
+                x, f_fn, fp_fn, self.K_main, device=device,
+            )
         self.thresholds = thresh.to(self.thresholds.device)
         self.y = recon.to(self.y.device)
         self.fitted = True

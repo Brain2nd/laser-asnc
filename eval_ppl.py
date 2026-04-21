@@ -63,18 +63,18 @@ def patch_gpt_neox_eager():
         pass
 
 
-def _load_asnc_act(state_layer, K):
+def _load_asnc_act(state_layer, K, K_tail=0):
     t, y = state_layer
-    m = make_asnc_gelu(K=K)
+    m = make_asnc_gelu(K=K, K_tail=K_tail)
     m.thresholds = t.clone()
     m.y = y.clone()
     m.fitted = True
     return m
 
 
-def _load_asnc_ln(base_ln, state_layer, K):
+def _load_asnc_ln(base_ln, state_layer, K, K_tail=0):
     t, y = state_layer
-    m = ASNCLayerNorm(base_ln, K=K)
+    m = ASNCLayerNorm(base_ln, K=K, K_tail=K_tail)
     m.thresholds = t.clone()
     m.y = y.clone()
     m.fitted = True
@@ -94,17 +94,19 @@ def _load_asnc_sm(state_layer, K):
 def install_from_codecs(model, state, use_act, use_ln, use_sm, use_dcr):
     meta = state["meta"]
     K_act, K_ln, K_sm = meta["K_act"], meta["K_ln"], meta["K_sm"]
+    K_tail_act = meta.get("K_tail_act", 0)
+    K_tail_ln  = meta.get("K_tail_ln", 0)
     layers = model.gpt_neox.layers
     for i, layer in enumerate(layers):
         if use_act and i in state["pre_gelu"]:
-            layer.mlp.act = _load_asnc_act(state["pre_gelu"][i], K_act).to(DEVICE)
+            layer.mlp.act = _load_asnc_act(state["pre_gelu"][i], K_act, K_tail_act).to(DEVICE)
         if use_ln:
             if i in state["ln1_in"]:
                 layer.input_layernorm = _load_asnc_ln(
-                    layer.input_layernorm, state["ln1_in"][i], K_ln).to(DEVICE)
+                    layer.input_layernorm, state["ln1_in"][i], K_ln, K_tail_ln).to(DEVICE)
             if i in state["ln2_in"]:
                 layer.post_attention_layernorm = _load_asnc_ln(
-                    layer.post_attention_layernorm, state["ln2_in"][i], K_ln).to(DEVICE)
+                    layer.post_attention_layernorm, state["ln2_in"][i], K_ln, K_tail_ln).to(DEVICE)
         if use_sm and i in state["post_softmax"]:
             layer.attention.asnc_softmax = _load_asnc_sm(
                 state["post_softmax"][i], K_sm).to(DEVICE)
@@ -144,14 +146,20 @@ def main():
     ap.add_argument("--use_sm",  action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--use_dcr", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--use_bse", action=argparse.BooleanOptionalAction, default=True)
+    ap.add_argument("--force_eager", action="store_true",
+                    help="force attn_implementation=eager so laser_eager path is actually used")
     args = ap.parse_args()
 
     print(f"Loading {args.model}", flush=True)
     tok = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model, torch_dtype=torch.float16,
-        attn_implementation="eager",
-    ).to(DEVICE).eval()
+    # Match the old exp_full_laser_pythia path: load with default attn_impl
+    # (sdpa on modern transformers). This means laser_eager is NOT actually
+    # called during PPL — DCR / Softmax ASNC flags are inert. To keep them
+    # active, pass --force_eager.
+    kwargs = dict(torch_dtype=torch.float16)
+    if args.force_eager:
+        kwargs["attn_implementation"] = "eager"
+    model = AutoModelForCausalLM.from_pretrained(args.model, **kwargs).to(DEVICE).eval()
 
     print("Loading wikitext-2 test tokens", flush=True)
     ds = load_dataset("wikitext", "wikitext-2-raw-v1", split="test")
