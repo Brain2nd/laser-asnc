@@ -1,0 +1,81 @@
+{
+  "ANN_FP16": {
+    "ppl": 4.859479904174805,
+    "time": 438.74042868614197
+  },
+  "layerwise_FFN_only": {
+    "ppl": 4.859480381011963,
+    "time": 436.1768708229065,
+    "n_modules": 96
+  },
+  "layerwise_Attn_only": {
+    "ppl": 4.859464645385742,
+    "time": 434.6687214374542,
+    "n_modules": 128
+  },
+  "layerwise_Embed_Output_only": {
+    "ppl": 4.859487056732178,
+    "time": 434.1952166557312,
+    "n_modules": 1
+  },
+  "layerwise_LN_only": {
+    "ppl": 4.859461784362793,
+    "time": 433.970454454422,
+    "n_modules": 65
+  },
+  "layerwise_Full_SNN": {
+    "ppl": 4.859471797943115,
+    "time": 435.9823160171509,
+    "n_modules": 225
+  },
+  "progressive_FFN": {
+    "ppl": 4.859480381011963,
+    "time": 436.3135712146759,
+    "n_modules": 96
+  },
+  "progressive_FFN_Act": {
+    "ppl": 4.859480381011963,
+    "time": 436.09484672546387,
+    "n_modules": 161
+  },
+  "progressive_FFN_Act_Attn": {
+    "ppl": 4.859468460083008,
+    "time": 436.76689982414246,
+    "n_modules": 289
+  },
+  "progressive_FFN_Act_Attn_Emb": {
+    "ppl": 4.859471797943115,
+    "time": 436.27753162384033,
+    "n_modules": 290
+  },
+  "progressive_Full": {
+    "ppl": 4.859471797943115,
+    "time": 435.308801651001,
+    "n_modules": 225
+  },
+  "attn_QKV_only": {
+    "ppl": 4.859511852264404,
+    "time": 433.5279493331909,
+    "n_modules": 96
+  },
+  "attn_O_only": {
+    "ppl": 4.8594889640808105,
+    "time": 433.41775488853455,
+    "n_modules": 32
+  },
+  "attn_QK_only": {
+    "ppl": 4.859464645385742,
+    "time": 433.68148612976074,
+    "n_modules": 64
+  },
+  "attn_VO_only": {
+    "ppl": 4.85949182510376,
+    "time": 433.85946679115295,
+    "n_modules": 64
+  },
+  "attn_Full": {
+    "ppl": 4.859464645385742,
+    "time": 434.007132768631,
+    "n_modules": 128
+  }
+}

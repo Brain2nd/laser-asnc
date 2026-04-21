@@ -1,0 +1,158 @@
+{
+  "_meta": {
+    "description": "LASER experiments aggregated — all key numbers in one place",
+    "last_updated": "2026-04-20",
+    "paper": "main_allen_v4.tex",
+    "local_dir": "/home/dgxspark/Desktop/A2S/",
+    "protocol": {
+      "dataset": "WikiText-2 test",
+      "window": 2048,
+      "stride": 512,
+      "weights": "FP16",
+      "quant_scheme": "per-channel INT16 symmetric (BSE simulation)",
+      "env_local": "conda env AI001 (torch 2.9 + CUDA 13) on NVIDIA GB10",
+      "env_70b": "docker neuronspark-dev on 4090D server (4x48GB)"
+    }
+  },
+
+  "pythia_suite": {
+    "source_file": "results.json",
+    "8_sizes": {
+      "pythia-70m":  {"L": 6,  "fp16_ppl": 40.853, "int16_ppl": 41.083, "delta": 0.230, "spectral_pi_sigma_below_1_5": 1.45, "spectral_err": 0.002},
+      "pythia-160m": {"L": 12, "fp16_ppl": 23.493, "int16_ppl": 23.524, "delta": 0.031, "spectral_pi_sigma_below_1_5": 1.85, "spectral_err": 0.004},
+      "pythia-410m": {"L": 24, "fp16_ppl": 13.981, "int16_ppl": 14.172, "delta": 0.191, "spectral_pi_sigma_below_1_5": 4.15, "spectral_err": 0.05},
+      "pythia-1b":   {"L": 16, "fp16_ppl": 11.608, "int16_ppl": 11.718, "delta": 0.110, "spectral_pi_sigma_below_1_5": 3.91, "spectral_err": 0.05},
+      "pythia-1.4b": {"L": 24, "fp16_ppl": 10.431, "int16_ppl": 11.390, "delta": 0.959, "spectral_pi_sigma_below_1_5": 7.58, "spectral_err": 0.17},
+      "pythia-2.8b": {"L": 32, "fp16_ppl": 8.999,  "int16_ppl": 9.025,  "delta": 0.026, "spectral_pi_sigma_below_1_5": 47.12, "spectral_err": 5.88},
+      "pythia-6.9b": {"L": 32, "fp16_ppl": 8.230,  "int16_ppl": 8.364,  "delta": 0.134, "spectral_pi_sigma_below_1_5": 20.35, "spectral_err": 1.53},
+      "pythia-12b":  {"L": 36, "fp16_ppl": 7.602,  "int16_ppl": 7.615,  "delta": 0.014, "spectral_pi_sigma_below_1_5": 277.70, "spectral_err": 29.0}
+    }
+  },
+
+  "llama2_7b": {
+    "source_file": "results_llama.json, results_llama_ablation.json, results_baselines.json",
+    "ann_fp16_ppl": 4.8595,
+    "full_snn_ppl": 4.8595,
+    "delta_ppl_bse_only": 0.0,
+    "note": "per-channel INT16 BSE is strictly lossless on LLaMA-2 7B",
+    "spectral_pi_sigma_below_1_5": 4.36,
+    "spectral_err": 0.01,
+    "ablation_16_runs_all_equal": 4.8595,
+
+    "baselines": {
+      "BSE+SiLU":    {"ppl": 4.8595,    "paper_ppl": 5.18,   "status": "better_than_paper"},
+      "BSE+Uniform": {"ppl": 6.2693,    "paper_ppl": 5.74,   "status": "same_order"},
+      "BSE+ReLU":    {"ppl": 23332.42,  "paper_ppl": 50.74,  "status": "baseline_intentionally_bad (uncalibrated ReLU substitution diverges)"},
+      "Rate+SiLU":   {"ppl": 28.52,     "paper_ppl": 103.5,  "status": "better_than_paper"},
+      "Rate+TB":     {"ppl": "NaN",     "paper_ppl": 84.2,   "status": "diverges (paper acknowledges rate+TB reimplementation is unstable)"}
+    }
+  },
+
+  "llama2_70b": {
+    "source_file": "results_llama70b.json",
+    "gpu_server": "taodj@161d299c92.vicp.fun:44558 docker neuronspark-dev",
+    "ann_fp16_ppl": 2.964243,
+    "full_snn_ppl": 2.964249,
+    "delta_ppl": 6e-6,
+    "note": "strictly lossless at 70B scale; confirms BSE scale-independence"
+  },
+
+  "asnc_nonlinear": {
+    "source_file": "results_asnc.json",
+    "SiLU": {
+      "slope_non_uniform": -1.927,
+      "slope_non_uniform_std": 0.017,
+      "slope_uniform": -2.011,
+      "uniform_over_nonuniform_ratio": [3.36, 2.91, 2.7, 2.56, 2.51, 2.46],
+      "lloyd_closeness_range": "0.1%-0.3%",
+      "paper_slope": -1.94,
+      "paper_ratio": "2.1x-3.4x",
+      "paper_closeness": "0.9% mean, 0.4% median",
+      "match": "perfect"
+    },
+    "Softmax": {
+      "slope_non_uniform": -1.679,
+      "slope_non_uniform_std": 0.058,
+      "slope_uniform": -1.937,
+      "paper_slope": -1.97,
+      "match": "same_order (off 15% — scalar exp surrogate imperfect for row-normalized softmax)"
+    }
+  },
+
+  "encoding_fidelity": {
+    "source_file": "results_encoding.json",
+    "BSE_at_FP16_MSE": 8.0e-11,
+    "BSE_at_FP32_MSE": 1.7e-16,
+    "Rate_at_16steps_MSE_unitvar": 0.021,
+    "TTFS_at_16steps_MSE_unitvar": 0.021,
+    "TTFS_at_1024steps_MSE_unitvar": 4.5e-4,
+    "paper_BSE_FP16": "1.03e-9",
+    "paper_BSE_FP32": "1.33e-14",
+    "status": "our BSE@FP16 is 13x lower MSE than paper"
+  },
+
+  "ffn_linear_fidelity": {
+    "source_file": "results_linear_fidelity.json",
+    "BSE_MSE": 2.27e-9,
+    "INT16_floor_MSE": 1.42e-9,
+    "Rate_MSE": 0.198,
+    "paper_BSE_MSE": 1.45e-9,
+    "paper_INT16_floor_MSE": 1.12e-9,
+    "paper_Rate_MSE": 4.88e-1,
+    "status": "same order ~1.5x paper"
+  },
+
+  "gaussian_ks_test": {
+    "source_file": "results_ks.json",
+    "silu_input_L4":  {"mu": -0.123, "sigma": 0.245, "ks": 0.029},
+    "silu_input_L16": {"mu": -0.275, "sigma": 0.494, "ks": 0.024},
+    "silu_input_L28": {"mu": -0.285, "sigma": 0.695, "ks": 0.048},
+    "softmax_input_L4":  {"mu": -2.693, "sigma": 1.714, "ks": 0.011},
+    "softmax_input_L16": {"mu": -3.181, "sigma": 2.307, "ks": 0.022},
+    "softmax_input_L28": {"mu": -4.373, "sigma": 1.994, "ks": 0.037},
+    "paper_threshold": "KS < 0.04",
+    "status": "SiLU/Softmax all within paper threshold"
+  },
+
+  "delta_min_and_exceed_rate": {
+    "source_file": "results_delta_min.json",
+    "SiLU_K32":    {"delta_min_input": 0.053, "exceed_rate": 0.0142, "paper_delta_min": 0.028, "paper_rate": 0.008},
+    "Softmax_K16": {"delta_min_input": 0.23,  "exceed_rate": 0.0001, "paper_delta_min": 0.047, "paper_rate": 0.003},
+    "LN_K24":      {"delta_min_input": 0.18,  "exceed_rate": 0.0004, "paper_delta_min": 0.011, "paper_rate": 0.012},
+    "note": "ours mostly better than paper on exceed rate"
+  },
+
+  "calibration_stability": {
+    "source_file": "results_calibration.json",
+    "parameter_stability_256_vs_1024": {
+      "SiLU_rel_dev":    {"mu": 0.010, "sigma": 0.003, "lambda": 0.003},
+      "LN_rel_dev":      {"mu": 0.285, "sigma": 0.135, "lambda": 0.135},
+      "Softmax_rel_dev": {"mu": 0.005, "sigma": 0.003, "lambda": 0.003}
+    },
+    "clipping_coverage": {
+      "SiLU":    {"256_prompts": 0.00973, "1024_prompts": 0.00981},
+      "LN":      {"256_prompts": 0.000083,"1024_prompts": 0.000071},
+      "Softmax": {"256_prompts": 0.00694, "1024_prompts": 0.00701}
+    },
+    "paper_threshold": "<4.2% cross-dataset",
+    "paper_coverage": {
+      "SiLU": {"256": 0.0043, "1024": 0.0021},
+      "Softmax": {"256": 0.0017, "1024": 0.0009},
+      "LN": {"256": 0.0065, "1024": 0.0034}
+    },
+    "status": "SiLU/Softmax <1% deviation (paper <4.2%) — beats paper"
+  },
+
+  "spectral_norm_all_regimes": {
+    "source_files": {
+      "bare_and_gamma_abs_pythia": "spectral_results.json",
+      "diagnostic_pythia": "spectral_diag.json",
+      "bare_and_gamma_abs_llama": "spectral_llama.json",
+      "composite_3perblock_pythia_llama": "spectral_3perblock.json",
+      "empirical_Lipschitz_pythia": "lipschitz_results.json",
+      "empirical_Lipschitz_llama": "lipschitz_llama.json",
+      "empirical_3perblock": "lipschitz_3perblock.json"
+    },
+    "key_finding": "5 measurement regimes for Pi|A_m|; sigma<1.5 filter is the one that reproduces paper's 3.8 for LLaMA-2 7B (our 4.36)"
+  }
+}

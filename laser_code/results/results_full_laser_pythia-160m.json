@@ -1,0 +1,11 @@
+{
+  "model": "EleutherAI/pythia-160m",
+  "fp16_ppl": 23.503740310668945,
+  "fp16_sec": 184.53905391693115,
+  "full_laser_ppl": 23.53312873840332,
+  "laser_sec": 363.0098874568939,
+  "delta_ppl": 0.029388427734375,
+  "K_activation": 32,
+  "K_softmax": 64,
+  "K_layernorm": 24
+}

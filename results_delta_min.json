@@ -1,0 +1,20 @@
+{
+  "SiLU": {
+    "delta_min_input": 0.05337238311767578,
+    "delta_min_output": 0.0066543519496917725,
+    "exceed_rate": 0.014240000396966934,
+    "K": 32
+  },
+  "Softmax": {
+    "delta_min_input": 0.2301788330078125,
+    "delta_min_output": 0.004734440241008997,
+    "exceed_rate": 5.999999848427251e-05,
+    "K": 16
+  },
+  "LayerNorm": {
+    "delta_min_input": 0.18131494522094727,
+    "delta_min_output": 0.18131494522094727,
+    "exceed_rate": 0.0003600000054575503,
+    "K": 24
+  }
+}

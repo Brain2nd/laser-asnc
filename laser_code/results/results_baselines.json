@@ -1,0 +1,22 @@
+{
+  "BSE_SiLU": {
+    "ppl": 4.859471797943115,
+    "time": 516.1822805404663
+  },
+  "BSE_ReLU": {
+    "ppl": 23332.419921875,
+    "time": 504.6597189903259
+  },
+  "BSE_Uniform": {
+    "ppl": 6.269252300262451,
+    "time": 578.0368263721466
+  },
+  "Rate_SiLU": {
+    "ppl": 28.522016525268555,
+    "time": 506.58576560020447
+  },
+  "Rate_TB": {
+    "ppl": "NaN (diverges \u2014 rate+TB unstable; paper reports 84.2 from their reimpl)",
+    "note": "Consistent with paper Section 5.3: rate+TB is a reimplementation, not originally evaluated in FP16/16-step regime"
+  }
+}

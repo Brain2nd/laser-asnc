@@ -1,0 +1,8 @@
+torch>=2.7
+transformers>=4.56
+datasets>=4.0
+huggingface_hub>=0.26
+scipy
+numpy
+tqdm
+lm-eval==0.4.11

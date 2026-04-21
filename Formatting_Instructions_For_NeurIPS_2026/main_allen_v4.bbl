@@ -1,0 +1,279 @@
+\begin{thebibliography}{30}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Auge et~al.(2021)Auge, Hille, Mueller, and Knoll]{auge2021encoding}
+Daniel Auge, Julian Hille, Etienne Mueller, and Alois Knoll.
+\newblock A survey of encoding techniques for signal processing in spiking
+  neural networks.
+\newblock \emph{Neural Processing Letters}, 53\penalty0 (6):\penalty0
+  4693--4710, 2021.
+\newblock ISSN 1573-773X.
+\newblock \doi{10.1007/s11063-021-10562-2}.
+\newblock URL \url{https://doi.org/10.1007/s11063-021-10562-2}.
+
+\bibitem[Biderman et~al.(2023)Biderman, Schoelkopf, Anthony, Bradley, O'Brien,
+  Hallahan, Khan, Purohit, Prashanth, Raff, Skowron, Sutawika, and van~der
+  Wal]{biderman2023pythia}
+Stella Biderman, Hailey Schoelkopf, Quentin Anthony, Herbie Bradley, Kyle
+  O'Brien, Eric Hallahan, Mohammad~Aflah Khan, Shivanshu Purohit, USVSN~Sai
+  Prashanth, Edward Raff, Aviya Skowron, Lintang Sutawika, and Oskar van~der
+  Wal.
+\newblock Pythia: A suite for analyzing large language models across training
+  and scaling.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2023.
+
+\bibitem[Bonilla et~al.(2022)Bonilla, Gautrais, Thorpe, and
+  Masquelier]{bonilla2022ttfs}
+Lina Bonilla, Jacques Gautrais, Simon Thorpe, and Timothée Masquelier.
+\newblock Analyzing time-to-first-spike coding schemes: A theoretical approach.
+\newblock \emph{Frontiers in Neuroscience}, 16:\penalty0 971937, 2022.
+\newblock ISSN 1662-453X.
+\newblock \doi{10.3389/fnins.2022.971937}.
+\newblock URL
+  \url{https://www.frontiersin.org/articles/10.3389/fnins.2022.971937}.
+
+\bibitem[Davies et~al.(2018)Davies, Srinivasa, Lin, Chinya, Cao, Choday, Dimou,
+  Joshi, Imam, Jain, Liao, Lin, Lines, Liu, Mathaikutty, McCoy, Paul, Tse,
+  Venkataramanan, Weng, Wild, Yang, and Wang]{davies2018loihi}
+Mike Davies, Narayan Srinivasa, Tsung-Han Lin, Gautham Chinya, Yongqiang Cao,
+  Sri~Harsha Choday, Georgios Dimou, Prasad Joshi, Nabil Imam, Shweta Jain,
+  Yuyun Liao, Chit-Kwan Lin, Andrew Lines, Ruokun Liu, Deepak Mathaikutty,
+  Steven McCoy, Arnab Paul, Jonathan Tse, Guruguhanathan Venkataramanan,
+  Yi-Hsin Weng, Andreas Wild, Yoonseok Yang, and Hong Wang.
+\newblock Loihi: A neuromorphic manycore processor with on-chip learning.
+\newblock \emph{IEEE Micro}, 38\penalty0 (1):\penalty0 82--99, 2018.
+\newblock \doi{10.1109/MM.2018.112130359}.
+
+\bibitem[Davies et~al.(2021)Davies, Wild, Orchard, Sandamirskaya, Guerra,
+  Joshi, Plank, and Risbud]{davies2021loihi}
+Mike Davies, Andreas Wild, Garrick Orchard, Yulia Sandamirskaya, Gabriel
+  A.~Fonseca Guerra, Prasad Joshi, Philipp Plank, and Sumedh~R. Risbud.
+\newblock Advancing neuromorphic computing with loihi: A survey of results and
+  outlook.
+\newblock \emph{Proceedings of the IEEE}, 109\penalty0 (5):\penalty0 911--934,
+  2021.
+\newblock \doi{10.1109/JPROC.2021.3067593}.
+
+\bibitem[Deng et~al.(2022)Deng, Li, Zhang, and Gu]{deng2022tet}
+Shikuang Deng, Yuhang Li, Shanghang Zhang, and Shi Gu.
+\newblock Temporal efficient training of spiking neural network via gradient
+  re-weighting.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2022.
+\newblock URL \url{https://openreview.net/forum?id=_XNtisL32jv}.
+
+\bibitem[Gao et~al.(2023)Gao, Tow, Abbasi, Biderman, Black, DiPofi, Foster,
+  Golding, Hsu, Le~Noac'h, Li, McDonell, Muennighoff, Ociepa, Phang, Reynolds,
+  Schoelkopf, Skowron, Sutawika, Tang, Thite, Wang, Wang, and
+  Zou]{eval-harness}
+Leo Gao, Jonathan Tow, Baber Abbasi, Stella Biderman, Sid Black, Anthony
+  DiPofi, Charles Foster, Laurence Golding, Jeffrey Hsu, Alain Le~Noac'h,
+  Haonan Li, Kyle McDonell, Niklas Muennighoff, Chris Ociepa, Jason Phang,
+  Laria Reynolds, Hailey Schoelkopf, Aviya Skowron, Lintang Sutawika, Eric
+  Tang, Anish Thite, Ben Wang, Kevin Wang, and Andy Zou.
+\newblock A framework for few-shot language model evaluation.
+\newblock \url{https://github.com/EleutherAI/lm-evaluation-harness}, 2023.
+
+\bibitem[Gersho and Gray(1992)]{gersho1992vector}
+Allen Gersho and Robert~M. Gray.
+\newblock \emph{Vector Quantization and Signal Compression}.
+\newblock Kluwer Academic Publishers, Boston, MA, 1992.
+\newblock ISBN 978-0-7923-9181-4 / 0-7923-9181-0.
+\newblock \doi{10.1007/978-1-4615-3626-0}.
+
+\bibitem[Guo et~al.(2021)Guo, Fouda, Eltawil, and Salama]{guo2021coding}
+Wenzhe Guo, Mohammed~E. Fouda, Ahmed~M. Eltawil, and Khaled~Nabil Salama.
+\newblock Neural coding in spiking neural networks: A comparative study for
+  robust neuromorphic systems.
+\newblock \emph{Frontiers in Neuroscience}, 15:\penalty0 638474, 2021.
+\newblock ISSN 1662-453X.
+\newblock \doi{10.3389/fnins.2021.638474}.
+\newblock URL
+  \url{https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2021.638474}.
+
+\bibitem[He et~al.(2024)He, Noci, Paliotta, Schlag, and
+  Hofmann]{he2024understanding}
+Bobby He, Lorenzo Noci, Daniele Paliotta, Imanol Schlag, and Thomas Hofmann.
+\newblock Understanding and minimising outlier features in transformer
+  training.
+\newblock In \emph{The Thirty-eighth Annual Conference on Neural Information
+  Processing Systems}, 2024.
+\newblock URL \url{https://openreview.net/forum?id=npJQ6qS4bg}.
+
+\bibitem[Hwang et~al.(2024)Hwang, Lee, Park, Lee, and
+  Kung]{spikedattention2024}
+Sangwoo Hwang, Seunghyun Lee, Dahoon Park, Donghun Lee, and Jaeha Kung.
+\newblock Spikedattention: Training-free and fully spike-driven
+  transformer-to-{SNN} conversion with winner-oriented spike shift for softmax
+  operation.
+\newblock In \emph{The Thirty-eighth Annual Conference on Neural Information
+  Processing Systems}, 2024.
+\newblock URL \url{https://openreview.net/forum?id=fs28jccJj5}.
+
+\bibitem[Lin et~al.(2024)Lin, Xu, Wu, Cui, Zhang, Mou, Song, Sun, and
+  Wei]{lin2024duquant}
+Haokun Lin, Haobo Xu, Yichen Wu, Jingzhi Cui, Yingtao Zhang, Linzhan Mou, Linqi
+  Song, Zhenan Sun, and Ying Wei.
+\newblock Duquant: Distributing outliers via dual transformation makes stronger
+  quantized {LLM}s.
+\newblock In \emph{The Thirty-eighth Annual Conference on Neural Information
+  Processing Systems}, 2024.
+\newblock URL \url{https://openreview.net/forum?id=mp8u2Pcmqz}.
+
+\bibitem[Neftci et~al.(2019)Neftci, Mostafa, and Zenke]{neftci2019surrogate}
+Emre~O. Neftci, Hesham Mostafa, and Friedemann Zenke.
+\newblock Surrogate gradient learning in spiking neural networks: Bringing the
+  power of gradient-based optimization to spiking neural networks.
+\newblock \emph{IEEE Signal Processing Magazine}, 36\penalty0 (6):\penalty0
+  51--63, 2019.
+\newblock \doi{10.1109/MSP.2019.2931595}.
+
+\bibitem[Press et~al.(2022)Press, Smith, and Lewis]{press2022train}
+Ofir Press, Noah~A. Smith, and Mike Lewis.
+\newblock Train short, test long: Attention with linear biases enables input
+  length extrapolation.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2022.
+
+\bibitem[Rathi and Roy(2023)]{rathi2021dietsnn}
+Nitin Rathi and Kaushik Roy.
+\newblock Diet-snn: A low-latency spiking neural network with direct input
+  encoding and leakage and threshold optimization.
+\newblock \emph{IEEE Transactions on Neural Networks and Learning Systems},
+  34\penalty0 (6):\penalty0 3174--3182, 2023.
+\newblock \doi{10.1109/TNNLS.2021.3111897}.
+
+\bibitem[Rathi et~al.(2020)Rathi, Srinivasan, Panda, and Roy]{rathi2020hybrid}
+Nitin Rathi, Gopalakrishnan Srinivasan, Priyadarshini Panda, and Kaushik Roy.
+\newblock Enabling deep spiking neural networks with hybrid conversion and
+  spike timing dependent backpropagation.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2020.
+\newblock URL \url{https://openreview.net/forum?id=B1xSperKvH}.
+
+\bibitem[Rueckauer et~al.(2017)Rueckauer, Lungu, Hu, Pfeiffer, and
+  Liu]{rueckauer2017conversion}
+Bodo Rueckauer, Iulia-Alexandra Lungu, Yuhuang Hu, Michael Pfeiffer, and
+  Shih-Chii Liu.
+\newblock Conversion of continuous-valued deep networks to efficient
+  event-driven networks for image classification.
+\newblock \emph{Frontiers in Neuroscience}, 11:\penalty0 682, 2017.
+\newblock ISSN 1662-453X.
+\newblock \doi{10.3389/fnins.2017.00682}.
+\newblock URL
+  \url{https://www.frontiersin.org/articles/10.3389/fnins.2017.00682}.
+
+\bibitem[Shrestha and Orchard(2018)]{shrestha2018slayer}
+Sumit~Bam Shrestha and Garrick Orchard.
+\newblock Slayer: Spike layer error reassignment in time.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 1419--1428, 2018.
+\newblock URL
+  \url{https://proceedings.neurips.cc/paper_files/paper/2018/hash/82f2b308c3b01637c607ce05f52a2fed-Abstract.html}.
+
+\bibitem[Stanojevic et~al.(2024)Stanojevic, Woźniak, Bellec, Cherubini,
+  Pantazi, and Gerstner]{stanojevic2024ttfs}
+Ana Stanojevic, Stanisław Woźniak, Guillaume Bellec, Giovanni Cherubini,
+  Angeliki Pantazi, and Wulfram Gerstner.
+\newblock High-performance deep spiking neural networks with 0.3 spikes per
+  neuron.
+\newblock \emph{Nature Communications}, 15\penalty0 (1):\penalty0 6793, 2024.
+\newblock \doi{10.1038/s41467-024-51110-5}.
+
+\bibitem[Tang et~al.(2025)Tang, Yan, and Wong]{tang2024sorbet}
+Kaiwen Tang, Zhanglu Yan, and Weng-Fai Wong.
+\newblock Sorbet: A neuromorphic hardware-compatible transformer-based spiking
+  language model.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2025.
+\newblock URL \url{https://openreview.net/forum?id=5dFJukfj4y}.
+
+\bibitem[Wang et~al.(2023)Wang, Shi, Lu, Liu, Zhang, and Qu]{wang2023stsa}
+Yuchen Wang, Kexin Shi, Chengzhuo Lu, Yuguo Liu, Malu Zhang, and Hong Qu.
+\newblock Spatial-temporal self-attention for asynchronous spiking neural
+  networks.
+\newblock In \emph{Proceedings of the Thirty-Second International Joint
+  Conference on Artificial Intelligence (IJCAI)}, pages 3085--3093, 2023.
+\newblock URL \url{https://www.ijcai.org/proceedings/2023/344}.
+
+\bibitem[Wu et~al.(2018)Wu, Deng, Li, Zhu, and Shi]{wu2018stbp}
+Yujie Wu, Lei Deng, Guoqi Li, Jun Zhu, and Luping Shi.
+\newblock Spatio-temporal backpropagation for training high-performance spiking
+  neural networks.
+\newblock \emph{Frontiers in Neuroscience}, 12, May 2018.
+\newblock ISSN 1662-453X.
+\newblock \doi{10.3389/fnins.2018.00331}.
+\newblock URL \url{http://dx.doi.org/10.3389/fnins.2018.00331}.
+
+\bibitem[Xing et~al.(2024)Xing, Zhang, Ni, Xiao, Ju, Fan, Wang, Zhang, and
+  Li]{xing2024spikelm}
+Xingrun Xing, Zheng Zhang, Ziyi Ni, Shitao Xiao, Yiming Ju, Siqi Fan, Yequan
+  Wang, Jiajun Zhang, and Guoqi Li.
+\newblock Spikelm: Towards general spike-driven language modeling via elastic
+  bi-spiking mechanisms.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine
+  Learning (ICML)}, volume 235 of \emph{Proceedings of Machine Learning
+  Research}, pages 54698--54714. PMLR, 2024.
+\newblock URL \url{https://proceedings.mlr.press/v235/xing24d.html}.
+
+\bibitem[Xing et~al.(2025)Xing, Gao, Zhang, Clifton, Xiao, Du, Li, and
+  Zhang]{xing2025spikellm}
+Xingrun Xing, Boyan Gao, Zheng Zhang, David~A. Clifton, Shitao Xiao, Li~Du,
+  Guoqi Li, and Jiajun Zhang.
+\newblock Spikellm: Scaling up spiking neural network to large language models
+  via saliency-based spiking.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2025.
+\newblock URL \url{https://openreview.net/forum?id=ZadnlOHsHv}.
+
+\bibitem[Yao et~al.(2023)Yao, Hu, Zhou, Yuan, Tian, Xu, and Li]{yao2023sdt}
+Man Yao, Jiakui Hu, Zhaokun Zhou, Li~Yuan, Yonghong Tian, Bo~Xu, and Guoqi Li.
+\newblock Spike-driven transformer.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2023.
+\newblock URL \url{https://openreview.net/forum?id=9FmolyOHi5}.
+
+\bibitem[You et~al.(2024)You, Xu, Nie, Deng, Guo, Wang, and
+  He]{you2024spikeziptf}
+Kang You, Zekai Xu, Chen Nie, Zhijie Deng, Qinghai Guo, Xiang Wang, and Zhezhi
+  He.
+\newblock Spikezip-tf: Conversion is all you need for transformer-based snn.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2024.
+
+\bibitem[Zhao et~al.(2025)Zhao, Huang, Ding, and
+  Yu]{ZhaoHuangDingYu2025_TTFSFormer}
+Lusen Zhao, Zihan Huang, Jianhao Ding, and Zhaofei Yu.
+\newblock {TTFSF}ormer: A {TTFS}-based lossless conversion of spiking
+  transformer.
+\newblock In \emph{Forty-second International Conference on Machine Learning},
+  2025.
+\newblock URL \url{https://openreview.net/forum?id=mJAa823xKu}.
+
+\bibitem[Zhou et~al.(2023)Zhou, Zhu, He, Wang, Yan, Tian, and
+  Yuan]{zhou2023spikformer}
+Zhaokun Zhou, Yuesheng Zhu, Chao He, Yaowei Wang, Shuicheng Yan, Yonghong Tian,
+  and Li~Yuan.
+\newblock Spikformer: When spiking neural network meets transformer.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2023.
+\newblock URL \url{https://openreview.net/forum?id=frE4fUwz_h}.
+
+\bibitem[Zhou et~al.(2024)Zhou, Che, Fang, Tian, Zhu, Yan, Tian, and
+  Yuan]{zhou2024spikformerv2}
+Zhaokun Zhou, Kaiwei Che, Wei Fang, Keyu Tian, Yuesheng Zhu, Shuicheng Yan,
+  Yonghong Tian, and Li~Yuan.
+\newblock Spikformer v2: Join the high accuracy club on imagenet with an snn
+  ticket, 2024.
+\newblock URL \url{https://arxiv.org/abs/2401.02020}.
+
+\bibitem[Zhu et~al.(2024)Zhu, Zhao, Li, and Eshraghian]{zhu2023spikegpt}
+Rui-Jie Zhu, Qihang Zhao, Guoqi Li, and Jason~K. Eshraghian.
+\newblock Spikegpt: Generative pre-trained language model with spiking neural
+  networks.
+\newblock \emph{Transactions on Machine Learning Research}, 2024.
+\newblock URL \url{https://openreview.net/forum?id=gcf1anBL9e}.
+
+\end{thebibliography}

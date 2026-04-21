@@ -1,0 +1,7 @@
+{
+  "model": "NousResearch/Llama-2-7b-hf",
+  "fp16_ppl": 4.8595,
+  "int16_weight_perchannel_ppl": 4.8595,
+  "delta_ppl_bse_only": 0.0000,
+  "note": "BSE-only (per-channel weight int16); matches 'zero-diffusion' claim. ASNC non-linear adds separately."
+}

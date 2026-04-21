@@ -1,0 +1,321 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{davies2018loihi,davies2021loihi}
+\citation{xing2025spikellm,zhou2024spikformerv2,ZhaoHuangDingYu2025_TTFSFormer}
+\citation{zhou2023spikformer,yao2023sdt,spikedattention2024}
+\citation{neftci2019surrogate,shrestha2018slayer,deng2022tet}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:introduction}{{1}{1}{Introduction}{section.1}{}}
+\newlabel{sec:introduction@cref}{{[section][1][]1}{[1][1][]1}{}{}{}}
+\citation{rueckauer2017conversion,auge2021encoding,guo2021coding}
+\citation{bonilla2022ttfs,stanojevic2024ttfs}
+\citation{ZhaoHuangDingYu2025_TTFSFormer}
+\citation{zhou2023spikformer,zhou2024spikformerv2}
+\citation{you2024spikeziptf}
+\citation{zhou2023spikformer}
+\citation{yao2023sdt,spikedattention2024,wang2023stsa}
+\citation{you2024spikeziptf,tang2024sorbet,zhu2023spikegpt,xing2025spikellm}
+\citation{neftci2019surrogate,wu2018stbp,shrestha2018slayer}
+\citation{wu2018stbp}
+\citation{shrestha2018slayer}
+\citation{rathi2021dietsnn}
+\citation{rathi2020hybrid}
+\citation{xing2024spikelm}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related_works}{{2}{2}{Related Work}{section.2}{}}
+\newlabel{sec:related_works@cref}{{[section][2][]2}{[1][2][]2}{}{}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Preliminaries}{3}{section.3}\protected@file@percent }
+\newlabel{sec:preliminaries}{{3}{3}{Preliminaries}{section.3}{}}
+\newlabel{sec:preliminaries@cref}{{[section][3][]3}{[1][3][]3}{}{}{}}
+\newlabel{eq:if_forward}{{1}{3}{Preliminaries}{equation.1}{}}
+\newlabel{eq:if_forward@cref}{{[equation][1][]1}{[1][3][]3}{}{}{}}
+\newlabel{eq:conversion_goal}{{2}{3}{Preliminaries}{equation.2}{}}
+\newlabel{eq:conversion_goal@cref}{{[equation][2][]2}{[1][3][]3}{}{}{}}
+\newlabel{eq:error_accumulation}{{3}{3}{Preliminaries}{equation.3}{}}
+\newlabel{eq:error_accumulation@cref}{{[equation][3][]3}{[1][3][]3}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Methodology}{3}{section.4}\protected@file@percent }
+\newlabel{sec:methodology}{{4}{3}{Methodology}{section.4}{}}
+\newlabel{sec:methodology@cref}{{[section][4][]4}{[1][3][]3}{}{}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Bit Spike Encoding (BSE): Linear Layers at the Quantization Floor}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{subsec:bse}{{4.1}{4}{Bit Spike Encoding (BSE): Linear Layers at the Quantization Floor}{subsection.4.1}{}}
+\newlabel{subsec:bse@cref}{{[subsection][1][4]4.1}{[1][4][]4}{}{}{}}
+\newlabel{asm:quantization_alignment}{{4.1}{4}{Quantization-grid alignment}{theorem.4.1}{}}
+\newlabel{asm:quantization_alignment@cref}{{[theorem][1][4]4.1}{[1][4][]4}{}{}{}}
+\newlabel{eq:bse_encoder}{{4}{4}{Bit Spike Encoding (BSE): Linear Layers at the Quantization Floor}{equation.4}{}}
+\newlabel{eq:bse_encoder@cref}{{[equation][4][]4}{[1][4][]4}{}{}{}}
+\newlabel{eq:bse_decoder}{{5}{4}{Bit Spike Encoding (BSE): Linear Layers at the Quantization Floor}{equation.5}{}}
+\newlabel{eq:bse_decoder@cref}{{[equation][5][]5}{[1][4][]4}{}{}{}}
+\newlabel{subsubsec:bse_theory}{{4.1}{4}{Bit Spike Encoding (BSE): Linear Layers at the Quantization Floor}{equation.5}{}}
+\newlabel{subsubsec:bse_theory@cref}{{[subsection][1][4]4.1}{[1][4][]4}{}{}{}}
+\newlabel{lem:bit_exact_main}{{4.2}{4}{Bit-exact emission}{theorem.4.2}{}}
+\newlabel{lem:bit_exact_main@cref}{{[theorem][2][4]4.2}{[1][4][]4}{}{}{}}
+\newlabel{thm:bse_main}{{4.3}{4}{Bijectivity and entropy preservation}{theorem.4.3}{}}
+\newlabel{thm:bse_main@cref}{{[theorem][3][4]4.3}{[1][4][]4}{}{}{}}
+\citation{he2024understanding,lin2024duquant}
+\def\@LN@column{1}
+\newlabel{cor:no_diffusion_main}{{4.4}{5}{Linear layers match the quantized ANN forward pass}{theorem.4.4}{}}
+\newlabel{cor:no_diffusion_main@cref}{{[theorem][4][4]4.4}{[1][4][]5}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Adaptive Spiking Neural Codec (ASNC): Bounding Nonlinear Error}{5}{subsection.4.2}\protected@file@percent }
+\newlabel{subsec:asnc}{{4.2}{5}{Adaptive Spiking Neural Codec (ASNC): Bounding Nonlinear Error}{subsection.4.2}{}}
+\newlabel{subsec:asnc@cref}{{[subsection][2][4]4.2}{[1][5][]5}{}{}{}}
+\newlabel{subsubsec:asnc_construction}{{4.2}{5}{Adaptive Spiking Neural Codec (ASNC): Bounding Nonlinear Error}{subsection.4.2}{}}
+\newlabel{subsubsec:asnc_construction@cref}{{[subsection][2][4]4.2}{[1][5][]5}{}{}{}}
+\newlabel{asm:gaussian_activations}{{4.5}{5}{Near-Gaussian activations}{theorem.4.5}{}}
+\newlabel{asm:gaussian_activations@cref}{{[theorem][5][4]4.5}{[1][5][]5}{}{}{}}
+\newlabel{eq:asnc_codec}{{6}{5}{Adaptive Spiking Neural Codec (ASNC): Bounding Nonlinear Error}{equation.6}{}}
+\newlabel{eq:asnc_codec@cref}{{[equation][6][]6}{[1][5][]5}{}{}{}}
+\newlabel{eq:asnc_output}{{7}{5}{Adaptive Spiking Neural Codec (ASNC): Bounding Nonlinear Error}{equation.7}{}}
+\newlabel{eq:asnc_output@cref}{{[equation][7][]7}{[1][5][]5}{}{}{}}
+\newlabel{subsubsec:asnc_forward}{{4.2}{5}{Adaptive Spiking Neural Codec (ASNC): Bounding Nonlinear Error}{equation.7}{}}
+\newlabel{subsubsec:asnc_forward@cref}{{[subsection][2][4]4.2}{[1][5][]5}{}{}{}}
+\newlabel{thm:asnc_bound}{{4.6}{5}{ASNC distortion at the Lloyd--Max optimum}{theorem.4.6}{}}
+\newlabel{thm:asnc_bound@cref}{{[theorem][6][4]4.6}{[1][5][]5}{}{}{}}
+\def\@LN@column{1}
+\newlabel{rem:lloyd_max}{{4.7}{6}{On codec convergence}{theorem.4.7}{}}
+\newlabel{rem:lloyd_max@cref}{{[theorem][7][4]4.7}{[1][5][]6}{}{}{}}
+\newlabel{asm:lipschitz}{{4.8}{6}{Lipschitz-bounded nonlinearities}{theorem.4.8}{}}
+\newlabel{asm:lipschitz@cref}{{[theorem][8][4]4.8}{[1][6][]6}{}{}{}}
+\newlabel{def:grid_units}{{4.9}{6}{Normalized grid units}{theorem.4.9}{}}
+\newlabel{def:grid_units@cref}{{[theorem][9][4]4.9}{[1][6][]6}{}{}{}}
+\newlabel{thm:e2e_bound}{{4.10}{6}{End-to-end forward error bound under BSE and ASNC}{theorem.4.10}{}}
+\newlabel{thm:e2e_bound@cref}{{[theorem][10][4]4.10}{[1][6][]6}{}{}{}}
+\newlabel{eq:e2e_bound}{{8}{6}{End-to-end forward error bound under BSE and ASNC}{equation.8}{}}
+\newlabel{eq:e2e_bound@cref}{{[equation][8][]8}{[1][6][]6}{}{}{}}
+\newlabel{cor:asnc_local_main}{{4.11}{6}{Forward error accumulates only at nonlinear sites}{theorem.4.11}{}}
+\newlabel{cor:asnc_local_main@cref}{{[theorem][11][4]4.11}{[1][6][]6}{}{}{}}
+\newlabel{rem:depth_indep}{{4.12}{6}{On ``depth-independence''}{theorem.4.12}{}}
+\newlabel{rem:depth_indep@cref}{{[theorem][12][4]4.12}{[1][6][]6}{}{}{}}
+\newlabel{subsubsec:asnc_training}{{4.2}{6}{Adaptive Spiking Neural Codec (ASNC): Bounding Nonlinear Error}{theorem.4.12}{}}
+\newlabel{subsubsec:asnc_training@cref}{{[subsection][2][4]4.2}{[1][6][]6}{}{}{}}
+\def\@LN@column{1}
+\newlabel{asm:input_spacing}{{4.13}{7}{Minimum input spacing within segments}{theorem.4.13}{}}
+\newlabel{asm:input_spacing@cref}{{[theorem][13][4]4.13}{[1][7][]7}{}{}{}}
+\newlabel{prop:ste_main}{{4.14}{7}{STE gradient decomposition under LASER}{theorem.4.14}{}}
+\newlabel{prop:ste_main@cref}{{[theorem][14][4]4.14}{[1][7][]7}{}{}{}}
+\newlabel{rem:fwd_bwd}{{4.15}{7}{Forward/backward parallel}{theorem.4.15}{}}
+\newlabel{rem:fwd_bwd@cref}{{[theorem][15][4]4.15}{[1][7][]7}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experiments}{7}{section.5}\protected@file@percent }
+\newlabel{sec:experiments}{{5}{7}{Experiments}{section.5}{}}
+\newlabel{sec:experiments@cref}{{[section][5][]5}{[1][7][]7}{}{}{}}
+\citation{press2022train}
+\citation{eval-harness}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Validating BSE: Linear Layers at the Quantization Floor}{8}{subsection.5.1}\protected@file@percent }
+\newlabel{subsec:exp_bse}{{5.1}{8}{Validating BSE: Linear Layers at the Quantization Floor}{subsection.5.1}{}}
+\newlabel{subsec:exp_bse@cref}{{[subsection][1][5]5.1}{[1][8][]8}{}{}{}}
+\citation{biderman2023pythia}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Validating ASNC: Distortion Scaling and Localization}{9}{subsection.5.2}\protected@file@percent }
+\newlabel{subsec:exp_asnc}{{5.2}{9}{Validating ASNC: Distortion Scaling and Localization}{subsection.5.2}{}}
+\newlabel{subsec:exp_asnc@cref}{{[subsection][2][5]5.2}{[1][8][]9}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces ASNC approximation distortion $D_K$ vs.\ segment count $K$ for SiLU and Softmax (log--log).}}{9}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:asnc_distortion}{{1}{9}{ASNC approximation distortion $D_K$ vs.\ segment count $K$ for SiLU and Softmax (log--log)}{figure.caption.2}{}}
+\newlabel{fig:asnc_distortion@cref}{{[figure][1][]1}{[1][9][]9}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}End-to-End Performance and Depth Evidence}{9}{subsection.5.3}\protected@file@percent }
+\newlabel{subsec:exp_scale}{{5.3}{9}{End-to-End Performance and Depth Evidence}{subsection.5.3}{}}
+\newlabel{subsec:exp_scale@cref}{{[subsection][3][5]5.3}{[1][9][]9}{}{}{}}
+\citation{xing2025spikellm}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {(a)} Component-level MSE on LLaMA-2 7B (FP16, 16 steps). \textbf  {(b)} System-level PPL under the same setting.}}{10}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:component_mse}{{2}{10}{\textbf {(a)} Component-level MSE on LLaMA-2 7B (FP16, 16 steps). \textbf {(b)} System-level PPL under the same setting}{figure.caption.3}{}}
+\newlabel{fig:component_mse@cref}{{[figure][2][]2}{[1][9][]10}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Ablation on WikiText-2 PPL (FP16, 16 steps; ANN baseline $5.12 \pm 0.01$). \textbf  {Left:} layer-wise sensitivity. \textbf  {Right:} progressive SNN-ization.}}{10}{table.caption.4}\protected@file@percent }
+\newlabel{tab:ablation}{{1}{10}{Ablation on WikiText-2 PPL (FP16, 16 steps; ANN baseline $5.12 \pm 0.01$). \textbf {Left:} layer-wise sensitivity. \textbf {Right:} progressive SNN-ization}{table.caption.4}{}}
+\newlabel{tab:ablation@cref}{{[table][1][]1}{[1][9][]10}{}{}{}}
+\def\@LN@column{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Controlled depth study: Pythia suite, WikiText-2 PPL under FP16/16-step protocol (matched architecture/tokenizer/training across sizes).}}{11}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:pythia_depth}{{3}{11}{Controlled depth study: Pythia suite, WikiText-2 PPL under FP16/16-step protocol (matched architecture/tokenizer/training across sizes)}{figure.caption.5}{}}
+\newlabel{fig:pythia_depth@cref}{{[figure][3][]3}{[1][10][]11}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces $\Delta $PPL (SNN $-$ ANN) on WikiText-2 across five deployment-scale models (mixed architecture/width/MoE). The 70B point uses 3 calibration subsets; others use 5.}}{11}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:depth_scaling}{{4}{11}{$\Delta $PPL (SNN $-$ ANN) on WikiText-2 across five deployment-scale models (mixed architecture/width/MoE). The 70B point uses 3 calibration subsets; others use 5}{figure.caption.5}{}}
+\newlabel{fig:depth_scaling@cref}{{[figure][4][]4}{[1][10][]11}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces End-to-end accuracy (\%) on LLMs under FP16/16 steps. Mean over 5 calibration subsets (\textdagger \ = 3 for 70B); std shown where $>\!0.5\%$.}}{11}{table.caption.6}\protected@file@percent }
+\newlabel{tab:scaling}{{2}{11}{End-to-end accuracy (\%) on LLMs under FP16/16 steps. Mean over 5 calibration subsets (\textdagger \ = 3 for 70B); std shown where $>\!0.5\%$}{table.caption.6}{}}
+\newlabel{tab:scaling@cref}{{[table][2][]2}{[1][10][]11}{}{}{}}
+\def\@LN@column{1}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Comparison on LLaMA-2 7B, WikiText-2 PPL. \textbf  {Upper:} cross-regime external references (SpikeLLM). \textbf  {Lower:} controlled internal baselines (FP16, 16 steps).}}{11}{table.caption.7}\protected@file@percent }
+\newlabel{tab:comparison}{{3}{11}{Comparison on LLaMA-2 7B, WikiText-2 PPL. \textbf {Upper:} cross-regime external references (SpikeLLM). \textbf {Lower:} controlled internal baselines (FP16, 16 steps)}{table.caption.7}{}}
+\newlabel{tab:comparison@cref}{{[table][3][]3}{[1][11][]11}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Assumption Validation and Robustness Analysis}{11}{subsection.5.4}\protected@file@percent }
+\newlabel{subsec:exp_assumptions}{{5.4}{11}{Assumption Validation and Robustness Analysis}{subsection.5.4}{}}
+\newlabel{subsec:exp_assumptions@cref}{{[subsection][4][5]5.4}{[1][11][]11}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Attention component ablation, LLaMA-2 7B, WikiText-2 (FP16, 16 steps).}}{12}{table.caption.8}\protected@file@percent }
+\newlabel{tab:attention_ablation}{{4}{12}{Attention component ablation, LLaMA-2 7B, WikiText-2 (FP16, 16 steps)}{table.caption.8}{}}
+\newlabel{tab:attention_ablation@cref}{{[table][4][]4}{[1][11][]12}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Per-module input spacing $\delta _{\min }$ and the frequency with which ASNC output error exceeds $\delta _{\min }/2$, on LLaMA-2 7B.}}{12}{table.caption.8}\protected@file@percent }
+\newlabel{tab:delta_min}{{5}{12}{Per-module input spacing $\delta _{\min }$ and the frequency with which ASNC output error exceeds $\delta _{\min }/2$, on LLaMA-2 7B}{table.caption.8}{}}
+\newlabel{tab:delta_min@cref}{{[table][5][]5}{[1][11][]12}{}{}{}}
+\def\@LN@column{1}
+\citation{davies2021loihi}
+\def\@LN@column{1}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Spectral-norm running product $\DOTSB \prod@ \slimits@ _m\|A_m\|$ across architectures under the $\sigma <1.5$-filtered empirical-Lipschitz protocol (same filter as LLaMA-2 7B's $\approx 3.8$ above). $\Delta $PPL from Figure~\ref {fig:pythia_depth}. Alternative regimes in Appendix~\ref {app:spectral_methodology}.}}{13}{table.caption.9}\protected@file@percent }
+\newlabel{tab:spectral_pythia}{{6}{13}{Spectral-norm running product $\prod _m\|A_m\|$ across architectures under the $\sigma <1.5$-filtered empirical-Lipschitz protocol (same filter as LLaMA-2 7B's $\approx 3.8$ above). $\Delta $PPL from Figure~\ref {fig:pythia_depth}. Alternative regimes in Appendix~\ref {app:spectral_methodology}}{table.caption.9}{}}
+\newlabel{tab:spectral_pythia@cref}{{[table][6][]6}{[1][13][]13}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Per-forward-pass operation breakdown on LLaMA-2 7B, expressed as relative integer FLOPs.}}{13}{table.caption.10}\protected@file@percent }
+\newlabel{tab:dcr_overhead}{{7}{13}{Per-forward-pass operation breakdown on LLaMA-2 7B, expressed as relative integer FLOPs}{table.caption.10}{}}
+\newlabel{tab:dcr_overhead@cref}{{[table][7][]7}{[1][13][]13}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Component-level energy ratio of a single ASNC nonlinear op on Intel Loihi~2 vs.\ SiLU on NVIDIA A100.}}{13}{table.caption.10}\protected@file@percent }
+\newlabel{tab:energy}{{8}{13}{Component-level energy ratio of a single ASNC nonlinear op on Intel Loihi~2 vs.\ SiLU on NVIDIA A100}{table.caption.10}{}}
+\newlabel{tab:energy@cref}{{[table][8][]8}{[1][13][]13}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Energy Efficiency on Neuromorphic Hardware (Component-Level)}{13}{subsection.5.5}\protected@file@percent }
+\newlabel{subsec:exp_energy}{{5.5}{13}{Energy Efficiency on Neuromorphic Hardware (Component-Level)}{subsection.5.5}{}}
+\newlabel{subsec:exp_energy@cref}{{[subsection][5][5]5.5}{[1][13][]13}{}{}{}}
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{auge2021encoding}{{1}{2021}{{Auge et~al.}}{{Auge, Hille, Mueller, and Knoll}}}
+\bibcite{biderman2023pythia}{{2}{2023}{{Biderman et~al.}}{{Biderman, Schoelkopf, Anthony, Bradley, O'Brien, Hallahan, Khan, Purohit, Prashanth, Raff, Skowron, Sutawika, and van~der Wal}}}
+\bibcite{bonilla2022ttfs}{{3}{2022}{{Bonilla et~al.}}{{Bonilla, Gautrais, Thorpe, and Masquelier}}}
+\bibcite{davies2018loihi}{{4}{2018}{{Davies et~al.}}{{Davies, Srinivasa, Lin, Chinya, Cao, Choday, Dimou, Joshi, Imam, Jain, Liao, Lin, Lines, Liu, Mathaikutty, McCoy, Paul, Tse, Venkataramanan, Weng, Wild, Yang, and Wang}}}
+\bibcite{davies2021loihi}{{5}{2021}{{Davies et~al.}}{{Davies, Wild, Orchard, Sandamirskaya, Guerra, Joshi, Plank, and Risbud}}}
+\bibcite{deng2022tet}{{6}{2022}{{Deng et~al.}}{{Deng, Li, Zhang, and Gu}}}
+\bibcite{eval-harness}{{7}{2023}{{Gao et~al.}}{{Gao, Tow, Abbasi, Biderman, Black, DiPofi, Foster, Golding, Hsu, Le~Noac'h, Li, McDonell, Muennighoff, Ociepa, Phang, Reynolds, Schoelkopf, Skowron, Sutawika, Tang, Thite, Wang, Wang, and Zou}}}
+\bibcite{gersho1992vector}{{8}{1992}{{Gersho and Gray}}{{}}}
+\bibcite{guo2021coding}{{9}{2021}{{Guo et~al.}}{{Guo, Fouda, Eltawil, and Salama}}}
+\bibcite{he2024understanding}{{10}{2024}{{He et~al.}}{{He, Noci, Paliotta, Schlag, and Hofmann}}}
+\bibcite{spikedattention2024}{{11}{2024}{{Hwang et~al.}}{{Hwang, Lee, Park, Lee, and Kung}}}
+\def\@LN@column{1}
+\bibcite{lin2024duquant}{{12}{2024}{{Lin et~al.}}{{Lin, Xu, Wu, Cui, Zhang, Mou, Song, Sun, and Wei}}}
+\bibcite{neftci2019surrogate}{{13}{2019}{{Neftci et~al.}}{{Neftci, Mostafa, and Zenke}}}
+\bibcite{press2022train}{{14}{2022}{{Press et~al.}}{{Press, Smith, and Lewis}}}
+\bibcite{rathi2021dietsnn}{{15}{2023}{{Rathi and Roy}}{{}}}
+\bibcite{rathi2020hybrid}{{16}{2020}{{Rathi et~al.}}{{Rathi, Srinivasan, Panda, and Roy}}}
+\bibcite{rueckauer2017conversion}{{17}{2017}{{Rueckauer et~al.}}{{Rueckauer, Lungu, Hu, Pfeiffer, and Liu}}}
+\bibcite{shrestha2018slayer}{{18}{2018}{{Shrestha and Orchard}}{{}}}
+\bibcite{stanojevic2024ttfs}{{19}{2024}{{Stanojevic et~al.}}{{Stanojevic, Woźniak, Bellec, Cherubini, Pantazi, and Gerstner}}}
+\bibcite{tang2024sorbet}{{20}{2025}{{Tang et~al.}}{{Tang, Yan, and Wong}}}
+\bibcite{wang2023stsa}{{21}{2023}{{Wang et~al.}}{{Wang, Shi, Lu, Liu, Zhang, and Qu}}}
+\bibcite{wu2018stbp}{{22}{2018}{{Wu et~al.}}{{Wu, Deng, Li, Zhu, and Shi}}}
+\bibcite{xing2024spikelm}{{23}{2024}{{Xing et~al.}}{{Xing, Zhang, Ni, Xiao, Ju, Fan, Wang, Zhang, and Li}}}
+\bibcite{xing2025spikellm}{{24}{2025}{{Xing et~al.}}{{Xing, Gao, Zhang, Clifton, Xiao, Du, Li, and Zhang}}}
+\bibcite{yao2023sdt}{{25}{2023}{{Yao et~al.}}{{Yao, Hu, Zhou, Yuan, Tian, Xu, and Li}}}
+\def\@LN@column{1}
+\bibcite{you2024spikeziptf}{{26}{2024}{{You et~al.}}{{You, Xu, Nie, Deng, Guo, Wang, and He}}}
+\bibcite{ZhaoHuangDingYu2025_TTFSFormer}{{27}{2025}{{Zhao et~al.}}{{Zhao, Huang, Ding, and Yu}}}
+\bibcite{zhou2023spikformer}{{28}{2023}{{Zhou et~al.}}{{Zhou, Zhu, He, Wang, Yan, Tian, and Yuan}}}
+\bibcite{zhou2024spikformerv2}{{29}{2024}{{Zhou et~al.}}{{Zhou, Che, Fang, Tian, Zhu, Yan, Tian, and Yuan}}}
+\bibcite{zhu2023spikegpt}{{30}{2024}{{Zhu et~al.}}{{Zhu, Zhao, Li, and Eshraghian}}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Transformer-Specific Operations: Full Derivations}{16}{appendix.A}\protected@file@percent }
+\newlabel{app:transformer_ops}{{A}{16}{Transformer-Specific Operations: Full Derivations}{appendix.A}{}}
+\newlabel{app:transformer_ops@cref}{{[section][1][]A}{[1][16][]16}{}{}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {B}End-to-End Error Bound: Full Proof}{17}{appendix.B}\protected@file@percent }
+\newlabel{app:e2e_proof}{{B}{17}{End-to-End Error Bound: Full Proof}{appendix.B}{}}
+\newlabel{app:e2e_proof@cref}{{[section][2][]B}{[1][17][]17}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Setup, Notation, and Unit Conventions}{17}{subsection.B.1}\protected@file@percent }
+\newlabel{app:e2e_setup}{{B.1}{17}{Setup, Notation, and Unit Conventions}{subsection.B.1}{}}
+\newlabel{app:e2e_setup@cref}{{[subsection][1][2]B.1}{[1][17][]17}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Recursion at Each Nonlinear Module}{17}{subsection.B.2}\protected@file@percent }
+\newlabel{app:recursion}{{B.2}{17}{Recursion at Each Nonlinear Module}{subsection.B.2}{}}
+\newlabel{app:recursion@cref}{{[subsection][2][2]B.2}{[1][17][]17}{}{}{}}
+\newlabel{eq:module_recursion}{{9}{17}{Recursion at Each Nonlinear Module}{equation.9}{}}
+\newlabel{eq:module_recursion@cref}{{[equation][9][]9}{[1][17][]17}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Linear Layer Passthrough: Honest Treatment of $\|A_m\|$}{17}{subsection.B.3}\protected@file@percent }
+\newlabel{app:linear_passthrough_honest}{{B.3}{17}{Linear Layer Passthrough: Honest Treatment of $\|A_m\|$}{subsection.B.3}{}}
+\newlabel{app:linear_passthrough_honest@cref}{{[subsection][3][2]B.3}{[1][17][]17}{}{}{}}
+\newlabel{eq:linear_passthrough_abs}{{10}{17}{Linear Layer Passthrough: Honest Treatment of $\|A_m\|$}{equation.10}{}}
+\newlabel{eq:linear_passthrough_abs@cref}{{[equation][10][]10}{[1][17][]17}{}{}{}}
+\newlabel{eq:linear_passthrough_grid}{{11}{17}{Linear Layer Passthrough: Honest Treatment of $\|A_m\|$}{equation.11}{}}
+\newlabel{eq:linear_passthrough_grid@cref}{{[equation][11][]11}{[1][17][]17}{}{}{}}
+\newlabel{rem:abs_approx}{{B.1}{17}{Where the approximation enters}{theorem.B.1}{}}
+\newlabel{rem:abs_approx@cref}{{[theorem][1][2]B.1}{[1][17][]17}{}{}{}}
+\def\@LN@column{1}
+\newlabel{eq:recursion_simplified_grid}{{12}{18}{Linear Layer Passthrough: Honest Treatment of $\|A_m\|$}{equation.12}{}}
+\newlabel{eq:recursion_simplified_grid@cref}{{[equation][12][]12}{[1][17][]18}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Unrolling the Recursion}{18}{subsection.B.4}\protected@file@percent }
+\newlabel{app:unroll}{{B.4}{18}{Unrolling the Recursion}{subsection.B.4}{}}
+\newlabel{app:unroll@cref}{{[subsection][4][2]B.4}{[1][18][]18}{}{}{}}
+\newlabel{eq:unrolled}{{13}{18}{Unrolling the Recursion}{equation.13}{}}
+\newlabel{eq:unrolled@cref}{{[equation][13][]13}{[1][18][]18}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Absolute-Unit Version}{18}{subsection.B.5}\protected@file@percent }
+\newlabel{app:e2e_abs}{{B.5}{18}{Absolute-Unit Version}{subsection.B.5}{}}
+\newlabel{app:e2e_abs@cref}{{[subsection][5][2]B.5}{[1][18][]18}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Depth Commentary}{18}{subsection.B.6}\protected@file@percent }
+\newlabel{app:depth_commentary}{{B.6}{18}{Depth Commentary}{subsection.B.6}{}}
+\newlabel{app:depth_commentary@cref}{{[subsection][6][2]B.6}{[1][18][]18}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Measurement Methodology for $\DOTSB \prod@ \slimits@ _m\|A_m\|$}{18}{subsection.B.7}\protected@file@percent }
+\newlabel{app:spectral_methodology}{{B.7}{18}{Measurement Methodology for $\prod _m\|A_m\|$}{subsection.B.7}{}}
+\newlabel{app:spectral_methodology@cref}{{[subsection][7][2]B.7}{[1][18][]18}{}{}{}}
+\def\@LN@column{1}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Five measurement regimes for $\DOTSB \prod@ \slimits@ _m\|A_m\|$ across LLaMA-2 7B and the Pythia suite (all per-block M=L empirical Lipschitz; bare and $\gamma $-absorbed columns use the $M=7L$ and $M=4L$ per-matrix expansions for LLaMA-2 7B (SwiGLU) and Pythia (standard MLP) respectively, and do not reflect in-situ amplification). Main-text Table~\ref {tab:spectral_pythia} uses the ``$\sigma <1.5$'' column. Entries are scientific notation for values above $10^{3}$.}}{19}{table.caption.12}\protected@file@percent }
+\newlabel{tab:spectral_full}{{9}{19}{Five measurement regimes for $\prod _m\|A_m\|$ across LLaMA-2 7B and the Pythia suite (all per-block M=L empirical Lipschitz; bare and $\gamma $-absorbed columns use the $M=7L$ and $M=4L$ per-matrix expansions for LLaMA-2 7B (SwiGLU) and Pythia (standard MLP) respectively, and do not reflect in-situ amplification). Main-text Table~\ref {tab:spectral_pythia} uses the ``$\sigma <1.5$'' column. Entries are scientific notation for values above $10^{3}$}{table.caption.12}{}}
+\newlabel{tab:spectral_full@cref}{{[table][9][]9}{[1][19][]19}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{$M=3L$ per-nonlinear-module measurements.}{19}{section*.13}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Supplementary $M=3L$ measurements. ``Pure-$W$ Π$\sigma $'' is the product of spectral norms of sub-gap weight composites ($W_Q^\top W_K/\sqrt  {d}$, $W_V W_O$, and the FFN linear composition) at $M=3L$. ``Emp. Π$\sigma $ ($M{=}3L$)'' is the product of per-sub-path empirical Lipschitz over the $3L$ sub-gaps. The three $\bar  \sigma $ columns are geometric means of sub-path empirical Lipschitz per block: attention ($\bar  \sigma _{\text  {attn}}$), MLP ($\bar  \sigma _{\text  {mlp}}$), and full residual block ($\bar  \sigma _{\text  {block}}$).}}{20}{table.caption.14}\protected@file@percent }
+\newlabel{tab:spectral_M3L}{{10}{20}{Supplementary $M=3L$ measurements. ``Pure-$W$ Π$\sigma $'' is the product of spectral norms of sub-gap weight composites ($W_Q^\top W_K/\sqrt {d}$, $W_V W_O$, and the FFN linear composition) at $M=3L$. ``Emp. Π$\sigma $ ($M{=}3L$)'' is the product of per-sub-path empirical Lipschitz over the $3L$ sub-gaps. The three $\bar \sigma $ columns are geometric means of sub-path empirical Lipschitz per block: attention ($\bar \sigma _{\text {attn}}$), MLP ($\bar \sigma _{\text {mlp}}$), and full residual block ($\bar \sigma _{\text {block}}$)}{table.caption.14}{}}
+\newlabel{tab:spectral_M3L@cref}{{[table][10][]10}{[1][19][]20}{}{}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {C}BSE: Full Construction and Proofs}{20}{appendix.C}\protected@file@percent }
+\newlabel{app:bse_entropy_proof}{{C}{20}{BSE: Full Construction and Proofs}{appendix.C}{}}
+\newlabel{app:bse_entropy_proof@cref}{{[section][3][]C}{[1][20][]20}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.1}Soma: Linear Layer Computation in the BSE Domain}{20}{subsection.C.1}\protected@file@percent }
+\newlabel{app:soma}{{C.1}{20}{Soma: Linear Layer Computation in the BSE Domain}{subsection.C.1}{}}
+\newlabel{app:soma@cref}{{[subsection][1][3]C.1}{[1][20][]20}{}{}{}}
+\newlabel{eq:soma_def_app}{{15}{20}{Soma: Linear Layer Computation in the BSE Domain}{equation.15}{}}
+\newlabel{eq:soma_def_app@cref}{{[equation][15][]15}{[1][20][]20}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.2}Setting and Notation}{20}{subsection.C.2}\protected@file@percent }
+\newlabel{app:bse_setting}{{C.2}{20}{Setting and Notation}{subsection.C.2}{}}
+\newlabel{app:bse_setting@cref}{{[subsection][2][3]C.2}{[1][20][]20}{}{}{}}
+\newlabel{eq:quantizer_grid_def}{{16}{20}{Setting and Notation}{equation.16}{}}
+\newlabel{eq:quantizer_grid_def@cref}{{[equation][16][]16}{[1][20][]20}{}{}{}}
+\def\@LN@column{1}
+\newlabel{eq:binary_expansion_def}{{17}{21}{Setting and Notation}{equation.17}{}}
+\newlabel{eq:binary_expansion_def@cref}{{[equation][17][]17}{[1][20][]21}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.3}BSE Encoder and Decoder}{21}{subsection.C.3}\protected@file@percent }
+\newlabel{app:bse_encdec}{{C.3}{21}{BSE Encoder and Decoder}{subsection.C.3}{}}
+\newlabel{app:bse_encdec@cref}{{[subsection][3][3]C.3}{[1][21][]21}{}{}{}}
+\newlabel{eq:standard_bit_schedule}{{18}{21}{BSE Encoder and Decoder}{equation.18}{}}
+\newlabel{eq:standard_bit_schedule@cref}{{[equation][18][]18}{[1][21][]21}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.4}Proofs}{21}{subsection.C.4}\protected@file@percent }
+\newlabel{app:bse_proofs}{{C.4}{21}{Proofs}{subsection.C.4}{}}
+\newlabel{app:bse_proofs@cref}{{[subsection][4][3]C.4}{[1][21][]21}{}{}{}}
+\newlabel{lem:bit_exact}{{C.1}{21}{Bit-exact emission, restated}{theorem.C.1}{}}
+\newlabel{lem:bit_exact@cref}{{[theorem][1][3]C.1}{[1][21][]21}{}{}{}}
+\newlabel{thm:bijective}{{C.2}{21}{Encoder-decoder bijection}{theorem.C.2}{}}
+\newlabel{thm:bijective@cref}{{[theorem][2][3]C.2}{[1][21][]21}{}{}{}}
+\newlabel{thm:entropy_preservation}{{C.3}{21}{Entropy preservation}{theorem.C.3}{}}
+\newlabel{thm:entropy_preservation@cref}{{[theorem][3][3]C.3}{[1][21][]21}{}{}{}}
+\newlabel{cor:no_diffusion}{{C.4}{21}{Linear layer equivalence, restated}{theorem.C.4}{}}
+\newlabel{cor:no_diffusion@cref}{{[theorem][4][3]C.4}{[1][21][]21}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}ASNC: Distortion Bound}{21}{appendix.D}\protected@file@percent }
+\newlabel{app:asnc_proof}{{D}{21}{ASNC: Distortion Bound}{appendix.D}{}}
+\newlabel{app:asnc_proof@cref}{{[section][4][]D}{[1][21][]21}{}{}{}}
+\citation{gersho1992vector}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.1}Setup}{22}{subsection.D.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.2}Segment-wise Representability}{22}{subsection.D.2}\protected@file@percent }
+\newlabel{app:codec_convergence}{{D.2}{22}{Segment-wise Representability}{subsection.D.2}{}}
+\newlabel{app:codec_convergence@cref}{{[subsection][2][4]D.2}{[1][22][]22}{}{}{}}
+\newlabel{lem:codec_convergence}{{D.1}{22}{Lloyd-Max reconstruction points are representable by the ASNC codec}{theorem.D.1}{}}
+\newlabel{lem:codec_convergence@cref}{{[theorem][1][4]D.1}{[1][22][]22}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.3}Distortion at the Lloyd-Max Optimum: Non-uniform vs.\ Uniform}{22}{subsection.D.3}\protected@file@percent }
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.4}Localization of the ASNC Error}{23}{subsection.D.4}\protected@file@percent }
+\newlabel{app:error_localization}{{D.4}{23}{Localization of the ASNC Error}{subsection.D.4}{}}
+\newlabel{app:error_localization@cref}{{[subsection][4][4]D.4}{[1][22][]23}{}{}{}}
+\newlabel{cor:asnc_localization}{{D.3}{23}{ASNC error localization}{theorem.D.3}{}}
+\newlabel{cor:asnc_localization@cref}{{[theorem][3][4]D.3}{[1][22][]23}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}STE Gradient Analysis Under LASER}{23}{appendix.E}\protected@file@percent }
+\newlabel{app:ste_proof}{{E}{23}{STE Gradient Analysis Under LASER}{appendix.E}{}}
+\newlabel{app:ste_proof@cref}{{[section][5][]E}{[1][23][]23}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.1}Setup}{23}{subsection.E.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.2}Linear Layers}{23}{subsection.E.2}\protected@file@percent }
+\newlabel{lem:ste_linear}{{E.1}{23}{STE gradient matches the quantized-ANN gradient}{theorem.E.1}{}}
+\newlabel{lem:ste_linear@cref}{{[theorem][1][5]E.1}{[1][23][]23}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.3}Nonlinear Layers: Honest Decomposition}{23}{subsection.E.3}\protected@file@percent }
+\def\@LN@column{1}
+\newlabel{prop:ste_correct}{{E.2}{24}{STE gradient characterization under LASER, restated}{theorem.E.2}{}}
+\newlabel{prop:ste_correct@cref}{{[theorem][2][5]E.2}{[1][24][]24}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F}ASNC Formal Specification}{24}{appendix.F}\protected@file@percent }
+\newlabel{app:asnc_details}{{F}{24}{ASNC Formal Specification}{appendix.F}{}}
+\newlabel{app:asnc_details@cref}{{[section][6][]F}{[1][24][]24}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.1}Segmental Codec and BSE Re-encoding}{24}{subsection.F.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.2}Adaptive Splitting Algorithm}{24}{subsection.F.2}\protected@file@percent }
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.3}Adaptive Weighting Mechanism}{25}{subsection.F.3}\protected@file@percent }
+\gdef \@abspage@last{25}
