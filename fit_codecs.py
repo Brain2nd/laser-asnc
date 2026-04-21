@@ -91,20 +91,24 @@ def fit_all_layers(model, tokens, K_act, K_ln, K_sm, n_calib_rows):
             ly.attention.register_forward_hook(post_attn, with_kwargs=True),
         ]
 
-        # forward until enough rows collected or tokens exhausted
+        # forward through ALL calib batches (no early exit) so every layer
+        # gets the full budget even if a hook under-captures.
         B, T = tokens.shape
-        b = 0
-        while b < B and min(pg_need[0], ln1_need[0], ln2_need[0]) > 0:
+        for b in range(B):
             _ = model(tokens[b:b+1].to(device), use_cache=False)
-            b += 1
 
         F.softmax = orig_softmax
         for h in hs: h.remove()
 
-        pg = torch.cat(pg_buf)
-        ln1 = torch.cat(ln1_buf)
-        ln2 = torch.cat(ln2_buf)
+        pg = torch.cat(pg_buf) if pg_buf else torch.empty(0, 0)
+        ln1 = torch.cat(ln1_buf) if ln1_buf else torch.empty(0, 0)
+        ln2 = torch.cat(ln2_buf) if ln2_buf else torch.empty(0, 0)
         sm = torch.cat(sm_buf) if sm_buf else None
+        if i == 0:
+            print(f"  debug layer0: tokens.shape={tuple(tokens.shape)} "
+                  f"pg={tuple(pg.shape)} ln1={tuple(ln1.shape)} "
+                  f"ln2={tuple(ln2.shape)} sm={None if sm is None else tuple(sm.shape)}",
+                  flush=True)
 
         # ------ fit codecs for layer i ------
         def _fit_act(samples):
@@ -163,10 +167,13 @@ def main():
     print("Loading wikitext-2 train tokens", flush=True)
     ds = load_dataset("wikitext", "wikitext-2-raw-v1", split="train")
     text = "\n\n".join(ds["text"])
-    enc = tok(text, return_tensors="pt").input_ids[0]
+    enc = tok(text, return_tensors="pt", truncation=False).input_ids[0]
+    print(f"  raw enc.numel()={enc.numel()}", flush=True)
     total = args.n_batches * args.seq_len
-    tokens = enc[:total].view(args.n_batches, args.seq_len)
-    print(f"  {args.n_batches} batches x {args.seq_len} tokens, L={model.config.num_hidden_layers}", flush=True)
+    if enc.numel() < total:
+        raise RuntimeError(f"wikitext-2 tokenised to only {enc.numel()} tokens < required {total}")
+    tokens = enc[:total].contiguous().view(args.n_batches, args.seq_len)
+    print(f"  tokens.shape={tuple(tokens.shape)}, L={model.config.num_hidden_layers}", flush=True)
 
     state = fit_all_layers(
         model, tokens,
